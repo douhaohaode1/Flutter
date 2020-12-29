@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/Config/Routes/RoutesManage.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter_demo/Model/ResultModel.dart';
 import 'package:flutter_demo/Http/ServiceImp.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_demo/Widget/ItemWidget.dart';
 import 'package:flutter_demo/Common/APPTheme.dart';
 import 'package:get/get.dart';
 import 'package:flutter_demo/Page/HomePage1.dart';
+
 /// 加载状态
 enum LoadMoreStatue{
   //加载中
@@ -34,7 +36,8 @@ class HomePage extends StatelessWidget {
               iconSize: 40,
               icon: getImage('images/issue.png'),
               onPressed: (){
-                Get.to(HomePage1());
+                //Get.to(HomePage1());
+                Get.changeTheme(Get.isDarkMode? Themes.light: Themes.dark);
               },
             ),
             actions : <Widget> [IconButton(
@@ -42,7 +45,7 @@ class HomePage extends StatelessWidget {
               iconSize: 40,
               icon: getImage('images/notice.png'),
               onPressed: (){
-                Get.to(HomePage1());
+                Get.toNamed(Routes.Welcome);
               },
             ),
             ],

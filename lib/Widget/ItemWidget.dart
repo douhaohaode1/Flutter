@@ -6,7 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_demo/Widget/FavoriteWidget.dart';
 import '../Model/ResultModel.dart';
 import 'package:get/get.dart';
-import 'package:flutter_demo/Common/APPTheme.dart';
+import 'package:flutter_demo/Config/Routes/RoutesManage.dart';
 
 class ItemWidget extends StatefulWidget {
 
@@ -41,8 +41,8 @@ class _ItemState extends State<ItemWidget> {
          shape: RoundedRectangleBorder(
          borderRadius: BorderRadius.circular(10), // 设置圆角
          side: BorderSide(                        // 边框
-          color: Colors.black12,
-          width: 1,
+         color: Colors.black12,
+         width: 1,
         ),
       ),
       child: Column(
