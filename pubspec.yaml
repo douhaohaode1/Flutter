@@ -59,6 +59,7 @@ flutter:
     - images/issue.png
     - images/notice.png
     - images/welcome.png
+    - images/placeholder_avatar.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

@@ -5,7 +5,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter_demo/Model/ResultModel.dart';
 import 'package:flutter_demo/Http/ServiceImp.dart';
 import 'package:flutter_demo/Widget/ItemWidget.dart';
-import 'package:flutter_demo/Common/APPTheme.dart';
+import 'package:flutter_demo/Config/Theme/APPTheme.dart';
 import 'package:get/get.dart';
 import 'package:flutter_demo/Page/HomePage1.dart';
 
@@ -21,23 +21,28 @@ enum LoadMoreStatue{
 
 class HomePage extends StatelessWidget {
 
-  final List <Widget> tarList = [Tab(text: "第一个",),Tab(text: "第二个", ),Tab( text: "第三个",)];
-
   @override
   Widget build(BuildContext context) {
+
+    List <Widget> tarList = [Tab(text: 'First'.tr,),Tab(text: 'Second'.tr, ),Tab( text: 'Third'.tr,)];
+
     return DefaultTabController(
       length: tarList.length, // tab个数
+      //length: 3, // tab个数
       child: Scaffold(
         // Tab组件必须放到Scaffold中
         appBar: AppBar(
-            title: Text("主页1"),
+            title: Text('HomePage'.tr),
             leading: IconButton(
               padding: EdgeInsets.only(left: 20, right: 0 ,top: 0,bottom: 0),
               iconSize: 40,
               icon: getImage('images/issue.png'),
               onPressed: (){
                 //Get.to(HomePage1());
-                Get.changeTheme(Get.isDarkMode? Themes.light: Themes.dark);
+               // Get.changeTheme(Get.isDarkMode? Themes.light: Themes.dark);
+                var locale = Locale('ja', 'JP');
+                Get.updateLocale(locale);
+               // zh_CN
               },
             ),
             actions : <Widget> [IconButton(
@@ -65,12 +70,12 @@ class HomePage extends StatelessWidget {
             OnlyGridView(),
             ListView(
               children: <Widget>[
-                ListTile(title: Text("这是第2个 tab")),
+                ListTile(title: Text("First".tr)),
               ],
             ),
             ListView(
               children: <Widget>[
-                ListTile(title: Text("这是第3个 tab")),
+                ListTile(title: Text("Third".tr)),
               ],
             ),
           ],

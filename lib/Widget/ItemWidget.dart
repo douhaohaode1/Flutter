@@ -32,22 +32,22 @@ class _ItemState extends State<ItemWidget> {
         onTap: () {
            Get.toNamed(Routes.NextScreen);
            },
-        child:  Card(
-         clipBehavior: Clip.antiAlias,
-         color: Colors.white, // 背景色
-         shadowColor: Colors.lightBlue, // 阴影颜色
-         elevation: 5, // 阴影高度
-         borderOnForeground: false, // 是否在 child 前绘制 border，默认为 true
-         shape: RoundedRectangleBorder(
-         borderRadius: BorderRadius.circular(10), // 设置圆角
-         side: BorderSide(                        // 边框
-         color: Colors.black12,
-         width: 1,
+         child:  Card(
+              clipBehavior: Clip.antiAlias,
+              color: Colors.white, // 背景色
+              shadowColor: Colors.lightBlue, // 阴影颜色
+              elevation: 5, // 阴影高度
+              borderOnForeground: false, // 是否在 child 前绘制 border，默认为 true
+              shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10), // 设置圆角
+              side: BorderSide(                        // 边框
+              color: Colors.black12,
+              width: 1,
         ),
       ),
-      child: Column(
-        children: <Widget>[
-          Stack(
+           child: Column(
+              children: <Widget>[
+              Stack(
             /**
              * Stack中第一个widget为底部的内容，第二个为盖在上面的widget。所以这里的圆形图片CircleAvatar是底部，
              * 第二个Container为盖在上面的文字。那么分析2这里的alignment就是调整第二个widget位置的属性。

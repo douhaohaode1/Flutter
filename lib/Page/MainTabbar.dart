@@ -2,6 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Page/HomePage.dart';
 import 'package:flutter_demo/Page/HomePage1.dart';
+import 'package:flutter_demo/Page/MinePage.dart';
+import 'package:flutter_demo/Modules/Translation/TranslationPage.dart';
+import 'package:get/get.dart';
+
+
 
 class MainTabbar extends StatefulWidget {
 
@@ -14,7 +19,7 @@ class _MainTabbar extends State<MainTabbar> {
 
   int cureentIndex = 0;
 
-  final  List listTabs = [HomePage() , HomePage1() , HomePage1() , HomePage1() ];
+  final  List listTabs = [HomePage() , TranslationPage() , HomePage1() , MinePage() ];
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +36,10 @@ class _MainTabbar extends State<MainTabbar> {
         type: BottomNavigationBarType.fixed,
         fixedColor: Colors.green,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.language_sharp),label :'第一页', ),
-          BottomNavigationBarItem(icon: Icon(Icons.note_add_outlined), label: '第二页',),
-          BottomNavigationBarItem(icon: Icon(Icons.leaderboard_outlined),label: '第三页',),
-          BottomNavigationBarItem(icon: Icon(Icons.person),label:'第四页',),
+          BottomNavigationBarItem(icon: Icon(Icons.language_sharp),label :'HomePage'.tr, ),
+          BottomNavigationBarItem(icon: Icon(Icons.note_add_outlined), label: 'First'.tr,),
+          BottomNavigationBarItem(icon: Icon(Icons.leaderboard_outlined),label: 'Second'.tr,),
+          BottomNavigationBarItem(icon: Icon(Icons.person),label:'Mine'.tr,),
         ],
       ),
     );

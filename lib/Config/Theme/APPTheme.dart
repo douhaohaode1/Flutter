@@ -199,8 +199,6 @@ class Themes {
   );
 
 
-
-
   static get light => ThemeData(
     brightness: Brightness.light,
     // backgroundColor: bgColor,
