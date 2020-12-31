@@ -11,6 +11,19 @@ import 'package:flutter_demo/Page/WelcomePage.dart';
 import 'package:flutter_demo/Page/MinePage.dart';
 import 'package:flutter_demo/Page/NotificationPage.dart';
 import 'package:flutter_demo/Page/SetupPage.dart';
+import 'package:flutter_demo/Animations/LoadStuff.dart';
+import 'package:flutter_demo/Animations/ParticleBackGround.dart';
+import 'package:flutter_demo/Animations/TypeWeiter.dart';
+import 'package:flutter_demo/Animations/FancyBackground.dart';
+import 'package:flutter_demo/Animations/PositionedTransition.dart';
+import 'package:flutter_demo/Animations/FadeTransition.dart';
+import 'package:flutter_demo/Animations/ScaleAnimation.dart';
+import 'package:flutter_demo/Animations/AnimatedPhysical.dart';
+import 'package:flutter_demo/Animations/AnimatedDefaultTextStyle.dart';
+import 'package:flutter_demo/Animations/Moving.dart';
+import 'package:flutter_demo/Animations/Transform.dart';
+
+
 
 abstract class Routes {
 
@@ -23,8 +36,21 @@ abstract class Routes {
   static const MinePage = '/MinePage';
   static const NotificationPage = '/NotificationPage';
   static const SetupPage = '/SetupPage';
+  static const LoadStuff = '/LoadStuff';
+  static const ParticleBackGround = '/ParticleBackGround';
+  static const TypeWeiter = '/TypeWeiter';
+  static const FancyBackground = '/FancyBackground';
+  static const PositionedTran = '/PositionedTran';
+  static const FadeTran = '/FadeTran';
+  static const ScaleAnimationExample = '/ScaleAnimationExample';
+  static const AnimatedPhysical = '/AnimatedPhysical';
+  static const AnimatedDefaultTextStyle = '/AnimatedDefaultTextStyle';
+  static const MoveObjectAnimation = '/MoveObjectAnimation';
+  static const TransformExample = '/TransformExample';
+
 
 }
+
 
 abstract class AppPages {
 
@@ -61,8 +87,49 @@ abstract class AppPages {
       name: Routes.SetupPage,
       page: () => SetupPage(),
     ),
-
+    GetPage(
+      name: Routes.LoadStuff,
+      page: () => LoadStuff(),
+    ),
+    GetPage(
+      name: Routes.ParticleBackGround,
+      page: () => ParticleBackGround(),
+    ),
+    GetPage(
+      name: Routes.TypeWeiter,
+      page: () => TypeWeiter(),
+    ),
+    GetPage(
+      name: Routes.FancyBackground,
+      page: () => FancyBackground(),
+    ),
+    GetPage(
+      name: Routes.PositionedTran,
+      page: () => PositionedTran(),
+    ),
+    GetPage(
+      name: Routes.FadeTran,
+      page: () => FadeTran(),
+    ),
+    GetPage(
+      name: Routes.ScaleAnimationExample,
+      page: () => ScaleAnimationExample(),
+    ),
+    GetPage(
+      name: Routes.AnimatedPhysical,
+      page: () => AnimatedPhysicalModelPage(),
+    ),
+    GetPage(
+      name: Routes.AnimatedDefaultTextStyle,
+      page: () => AnimatedDefaultTextStyleExample(),
+    ),
+    GetPage(
+      name: Routes.MoveObjectAnimation,
+      page: () => MoveObjectAnimation(),
+    ),
+    GetPage(
+      name: Routes.TransformExample,
+      page: () => TransformExample(),
+    ),
   ];
-
 }
-

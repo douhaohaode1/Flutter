@@ -10,7 +10,7 @@ class HomePage1 extends StatelessWidget {
 
     List<Widget> _list = new List();
     for (int i = 0; i < titleItems.length; i++) {
-      _list.add(buildListData1(context, titleItems[i], iconItems[i], subTitleItems[i]));
+      _list.add(buildListData1(context, titleItems[i], iconItems[i], subTitleItems[i], i));
     }
     // 分割线
     var divideTiles = ListTile.divideTiles(context: context, tiles: _list).toList();
@@ -43,7 +43,7 @@ class HomePage1 extends StatelessWidget {
           children: <Widget>[
             ListView.separated(
                 itemBuilder: (context, item) {
-                  return buildListData1(context, titleItems[item], iconItems[item], subTitleItems[item]);
+                  return buildListData1(context, titleItems[item], iconItems[item], subTitleItems[item] ,item);
                 },
                 separatorBuilder: (BuildContext context, int index) => new Divider(),
                 itemCount: iconItems.length
@@ -65,7 +65,7 @@ class HomePage1 extends StatelessWidget {
   }
 
 
-  Widget buildListData1(BuildContext context, String titleItem, Icon iconItem, String subTitleItem) {
+  Widget buildListData1(BuildContext context, String titleItem, Icon iconItem, String subTitleItem, int row) {
     return new ListTile(
       leading: iconItem,
       title: new Text(
@@ -77,8 +77,48 @@ class HomePage1 extends StatelessWidget {
       ),
       trailing: new Icon(Icons.keyboard_arrow_right),
       onTap: () {
-          Get.toNamed(Routes.NextScreen1);
+
+        if (row == 0){
+          Get.toNamed(Routes.TypeWeiter);
+        }
+        if (row == 1){
+          Get.toNamed(Routes.LoadStuff);
+        }
+        if (row == 2){
+          Get.toNamed(Routes.ParticleBackGround);
+        }
+        if (row == 3){
+          Get.toNamed(Routes.FancyBackground);
+        }
+        if (row == 4){
+          Get.toNamed(Routes.PositionedTran);
+        }
+        if (row == 5){
+          Get.toNamed(Routes.FadeTran);
+        }
+        if (row == 6){
+          Get.toNamed(Routes.ScaleAnimationExample);
+        }
+
+        if (row == 7){
+          Get.toNamed(Routes.AnimatedPhysical);
+        }
+        if (row == 8){
+          Get.toNamed(Routes.AnimatedDefaultTextStyle);
+        }
+        if (row == 9){
+          Get.toNamed(Routes.MoveObjectAnimation);
+        }
+        if (row == 10){
+          Get.toNamed(Routes.TransformExample);
+        }
+
+
+
+        print("111111");
+
       },
+
 
     );
   }
@@ -112,12 +152,12 @@ class HomePage1 extends StatelessWidget {
 
   // 数据源
   List<String> titleItems = <String>[
-    'keyboard', 'print',
-    'router', 'pages',
-    'zoom_out_map', 'zoom_out',
-    'youtube_searched_for', 'wifi_tethering',
-    'wifi_lock', 'widgets',
-    'weekend', 'web',
+    'type Weiter', 'Load Stuff Button',
+    'particle_background', 'FancyBackGroud',
+    'PositionedTran', 'FadeTransition',
+    'ScaleAnimaition', 'ScaleAnimationExample',
+    'AnimatedPhysical', 'AnimatedDefaultTextStyle',
+    'TransformExample', 'TransformExample',
     '图accessible', 'ac_unit',
   ];
 
@@ -132,14 +172,15 @@ class HomePage1 extends StatelessWidget {
   ];
 
   List<String> subTitleItems = <String>[
-    'subTitle: keyboard', 'subTitle: print',
-    'subTitle: router', 'subTitle: pages',
-    'subTitle: zoom_out_map', 'subTitle: zoom_out',
-    'subTitle: youtube_searched_for', 'subTitle: wifi_tethering',
-    'subTitle: wifi_lock', 'subTitle: widgets',
-    'subTitle: weekend', 'subTitle: web',
+    '文本自动输入显示动画', '点击按钮加载动作，后完成动作',
+    '会动的气泡和背景颜色', '波浪的背景图片',
+    '移动两个按钮', '文字渐现',
+    '图片放大', '图片阴影',
+    '文字变换', '移动视图',
+    '位置移动', 'subTitle: web',
     'subTitle: accessible', 'subTitle: ac_unit',
   ];
+
   //动态列表数据：
   List GridData = [
     {
