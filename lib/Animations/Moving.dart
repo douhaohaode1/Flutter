@@ -12,20 +12,27 @@ class MoveObjectAnimation extends StatefulWidget {
 
 class AnimationState extends State<MoveObjectAnimation>
     with SingleTickerProviderStateMixin {
+
   Animation<double> _animation;
   AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
+
     _controller = new AnimationController(
         vsync: this, duration: new Duration(seconds: 3));
+
     Tween tween = new Tween<double>(begin: 2.0, end: 200.0);
-    _animation = tween.animate(_controller);
-    _animation.addListener(() {
-      setState(() {});
+
+    _animation = tween.animate(_controller)
+            ..addListener(() {
+               setState(() {
+                 print("1111");
+      });
+
     });
-    _controller.repeat();
+   // _controller.repeat();
   }
 
   @override

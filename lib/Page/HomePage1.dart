@@ -99,7 +99,6 @@ class HomePage1 extends StatelessWidget {
         if (row == 6){
           Get.toNamed(Routes.ScaleAnimationExample);
         }
-
         if (row == 7){
           Get.toNamed(Routes.AnimatedPhysical);
         }
@@ -112,8 +111,9 @@ class HomePage1 extends StatelessWidget {
         if (row == 10){
           Get.toNamed(Routes.TransformExample);
         }
-
-
+        if (row == 11){
+          Get.toNamed(Routes.SlideTranstionWidget);
+        }
 
         print("111111");
 
