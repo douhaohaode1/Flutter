@@ -114,6 +114,9 @@ class HomePage1 extends StatelessWidget {
         if (row == 11){
           Get.toNamed(Routes.SlideTranstionWidget);
         }
+        if (row == 12){
+          Get.toNamed(Routes.TextspanWidget);
+        }
 
         print("111111");
 
@@ -157,8 +160,8 @@ class HomePage1 extends StatelessWidget {
     'PositionedTran', 'FadeTransition',
     'ScaleAnimaition', 'ScaleAnimationExample',
     'AnimatedPhysical', 'AnimatedDefaultTextStyle',
-    'TransformExample', 'TransformExample',
-    '图accessible', 'ac_unit',
+    'TransformExample', '平移动画',
+    '富文本', 'ac_unit',
   ];
 
   List<Icon> iconItems = <Icon>[

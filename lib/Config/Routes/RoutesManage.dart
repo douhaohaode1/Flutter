@@ -23,6 +23,7 @@ import 'package:flutter_demo/Animations/AnimatedDefaultTextStyle.dart';
 import 'package:flutter_demo/Animations/Moving.dart';
 import 'package:flutter_demo/Animations/Transform.dart';
 import 'package:flutter_demo/Animations/SlideTranstionWidget.dart';
+import 'package:flutter_demo/Widget/TextspanWidget.dart';
 
 
 abstract class Routes {
@@ -48,7 +49,7 @@ abstract class Routes {
   static const MoveObjectAnimation = '/MoveObjectAnimation';
   static const TransformExample = '/TransformExample';
   static const SlideTranstionWidget = '/SlideTranstionWidget';
-
+  static const TextspanWidget = '/TextspanWidget';
 
 }
 
@@ -135,6 +136,10 @@ abstract class AppPages {
     GetPage(
       name: Routes.SlideTranstionWidget,
       page: () => SlideTranstionWidget(),
+    ),
+    GetPage(
+      name: Routes.TextspanWidget,
+      page: () => TextspanWidget(),
     ),
   ];
 }
