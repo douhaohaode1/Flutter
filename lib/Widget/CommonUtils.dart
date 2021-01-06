@@ -3,8 +3,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-//import 'package:flutter_news/widget/Triangle.dart';
-
+import 'package:flutter/src/material/constants.dart';
+import 'dart:ui';
 
 class CommonUtils {
   static showLoadingDialog(BuildContext context, String msg) {
@@ -76,11 +76,15 @@ class CommonUtils {
   }
 
   static showChooseDialog(BuildContext context, Size size, double x , double y) {
+
+    final double height  = MediaQuery.of(context).padding.top + kToolbarHeight ;
+
     final double wx = size.height;
     final double dx = x;
-    final double dy =y;
+    final double dy = y + height;
     final double w = MediaQuery.of(context).size.width;
-    final double h = MediaQuery.of(context).size.height;
+    //final double h = MediaQuery.of(context).size.height - height;
+    final double h = MediaQuery.of(context).size.height ;
 
     return showDialog(
       context: context,
@@ -109,7 +113,7 @@ class CommonUtils {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
-                        Radius.circular(10.0),
+                        Radius.circular(9.0),
                       ),
                       color: Colors.white,
                     ),
@@ -152,14 +156,14 @@ class CommonUtils {
                   ),
                 ),
                 Positioned(
-                  left: dx - 10.0,
+                  left: dx + 5,
                   top: dy < h / 2 ? dy - wx / 2 : null,
                   bottom: dy < h / 2 ? null : (h - dy - wx / 2),
                   child: ClipPath(
                     clipper: Triangle(dir: dy - h / 2),
                     child: Container(
-                      width: 30.0,
-                      height: 30.0,
+                      width: 25.0,
+                      height: 25.0,
                       color: Colors.white,
                       child: null,
                     ),
