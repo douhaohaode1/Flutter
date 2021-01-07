@@ -7,6 +7,11 @@ class API {
   static String getList([int pageNum =0]){
     return "/project/list/$pageNum/json?cid=294";
   }
+
+  static String translation(){
+
+    return "";
+  }
 }
 
 

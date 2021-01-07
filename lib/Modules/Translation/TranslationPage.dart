@@ -1,19 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_demo/Config/Routes/RoutesManage.dart';
-
-
-
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 
 class TranslationPage extends StatelessWidget {
+
+  List _imgUrls = [
+    'http://pic1.nipic.com/2008-12-05/200812584425541_2.jpg',
+    'http://pic18.nipic.com/20111129/4155754_234055006000_2.jpg',
+    'http://b-ssl.duitang.com/uploads/item/201412/25/20141225204152_aYEc3.jpeg'
+  ];
+
+  final FocusNode focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
+
+    String input = '';
+    final controller = TextEditingController();
+
+    controller.addListener(() {
+
+      input =  controller.text;
+
+      print('input ${controller.text}');
+
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text("翻译"),
       ),
-      body: Container(
+      body: GestureDetector(
+       onPanDown : (DragDownDetails details) {
+       focusNode.unfocus();
+      },
+      // onTap: () {
+      //     print("2222222");
+      //       focusNode.unfocus();
+      //   },
+        child:Container(
           padding: EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 0),
           //height: 250,
              //padding: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
@@ -28,32 +55,73 @@ class TranslationPage extends StatelessWidget {
                      TextField(
                        maxLines: 8,
                        minLines: 1,
+                       controller: controller,
+                       focusNode: focusNode,
+                       // onChanged: (text) {//内容改变的回调
+                       //   print('change $text');
+                       // },
+                       onSubmitted: (text) {//内容提交(按回车)的回调
+
+                        // print('submit $text');
+                       },
+                       enabled: true,//是否禁用
                        decoration: InputDecoration(hintText: '输入翻译内容', border: OutlineInputBorder(),
                          //  counter: Text("自定义计数 0/100"),
                          suffixIcon: IconButton(
                            icon: Icon(Icons.close),
                            onPressed: () {
                             // controller.clear();
+                             controller.text = '';
+                             focusNode.unfocus();
                            },
                          ),
                        ),
                      ),
-                     resultListWidget(context),
 
-                  ],
+                       // Expanded 或 Flexible 组件可用作长文本的自动换行。
+                       //在 Flutter文档中 虽然没有明确说明，但是在主轴上如有内容超出空间， Expanded 和 Flexible 会自动换行到纵轴。
+                     Expanded(child:
+                           resultListWidget(context),
+                       ) ,
+
+
+                   ],
               ),
        ),
+      ),
     );
   }
+
+  //**
+  //
+  // Expanded(child: Swiper(
+  //                        itemCount: _imgUrls.length,
+  //                        autoplay: true,
+  //                        itemBuilder: (BuildContext context,int index){
+  //                          // 获取图片
+  //                          return Image.network(
+  //                            _imgUrls[index],
+  //                            // 适配方式
+  //                            fit: BoxFit.fill,
+  //                          );
+  //                        },
+  //                        // 添加一个页码指示器
+  //                        pagination: SwiperPagination(),
+  //                      ),) ,
+  // */
+
+
+
 
   Widget resultListWidget(BuildContext context) {
 
     List<String> titleItems = <String>[
-      'zoom_out_map', 'zoom_out',
-      'youtube_searched_for',
+      'zoom_out_map','zoom_out_map','zoom_out_map','zoom_out_map','zoom_out_map','zoom_out_map','zoom_out_map','zoom_out_map',
     ];
 
   return  ListView.separated(
+     // controller: scrollController,//监听滑动
+      //physics: ClampingScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: (context, item) {
           return buildListData(context, titleItems[item]);
@@ -75,7 +143,12 @@ class TranslationPage extends StatelessWidget {
       ),
       trailing: new Icon(Icons.keyboard_arrow_right),
       onTap: () {
-        Get.toNamed(Routes.NextScreen1);
+
+        //print("333");
+
+        //focusNode.unfocus();
+        Get.toNamed(Routes.LearnPage);
+
       },
 
     );
@@ -103,7 +176,7 @@ class TranslationPage extends StatelessWidget {
                 height: 35,
               ),
               onPressed: () {
-                // Get.toNamed(Routes.Translation);
+
               }),
           SizedBox(
             width: 10,

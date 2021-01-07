@@ -19,7 +19,6 @@ class ServiceImpl{
 
     Response responses = await HttpUtils.getInstance().get(API.getList(pageNum),
         onSuccess: (responses){
-
         },
         onFailure: (msg){
 
@@ -29,9 +28,22 @@ class ServiceImpl{
     var json = jsonDecode(responses.toString());
     final  ResutlModel models = JsonMapper.deserialize<ResutlModel>(json);
     return resultToVo(models);
-
   }
 
+  getTranslation(String pama) async{
+
+    Response responses = await HttpUtils.getInstance().get(API.translation(),
+        onSuccess: (responses){
+
+        },
+        onFailure: (msg){
+
+        },
+        isNeedCache: true);
+
+    var json = jsonDecode(responses.toString());
+
+  }
 
 
 }
