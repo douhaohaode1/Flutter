@@ -10,7 +10,6 @@ CREATE TABLE tb_notebookList (
   number TEXT,
   other TEXT,
   trans_result TEXT,
-
 );
 
 

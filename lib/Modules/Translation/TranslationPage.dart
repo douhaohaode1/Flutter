@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_demo/Config/Routes/RoutesManage.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-
+import 'package:flutter_demo/Tool/SqlDB/DatabaseHelper.dart';
 
 class TranslationPage extends StatelessWidget {
 

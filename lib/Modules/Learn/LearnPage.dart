@@ -98,22 +98,6 @@ class bodyContent extends StatelessWidget {
             child: Swiper(
                 //layout: SwiperLayout.TINDER, //卡片
                 layout: SwiperLayout.DEFAULT,
-               // layout: SwiperLayout.CUSTOM,
-              // customLayoutOption: CustomLayoutOption(
-              //     startIndex: 1,
-              //     stateCount: 3
-              // ).addRotate([
-              //   -0.0/180,
-              //   0.0,
-              //   90.0/180
-              // ]).addTranslate([
-              //   Offset(-470.0, -40.0),
-              //   Offset(0.0, 0.0),
-              //   Offset(470.0, -40.0)
-              // ]),
-              //itemWidth: 300,
-              //itemHeight: 200,
-                 //itemHeight: 200,
                 itemCount: _imgUrls.length,
                 autoplay: true,
                 viewportFraction: 0.8, // 视窗比例
