@@ -43,11 +43,11 @@ class _ItemState extends State<ItemWidget> {
               side: BorderSide(                        // 边框
               color: Colors.black12,
               width: 1,
-        ),
-      ),
+             ),
+          ),
            child: Column(
               children: <Widget>[
-              Stack(
+                Stack(
             /**
              * Stack中第一个widget为底部的内容，第二个为盖在上面的widget。所以这里的圆形图片CircleAvatar是底部，
              * 第二个Container为盖在上面的文字。那么分析2这里的alignment就是调整第二个widget位置的属性。

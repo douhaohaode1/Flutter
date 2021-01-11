@@ -25,7 +25,7 @@ import 'package:flutter_demo/Animations/Transform.dart';
 import 'package:flutter_demo/Animations/SlideTranstionWidget.dart';
 import 'package:flutter_demo/Widget/TextspanWidget.dart';
 import 'package:flutter_demo/Modules/Learn/LearnPage.dart';
-
+import 'package:flutter_demo/Modules/History/HistoryPage.dart';
 
 
 abstract class Routes {
@@ -53,6 +53,9 @@ abstract class Routes {
   static const SlideTranstionWidget = '/SlideTranstionWidget';
   static const TextspanWidget = '/TextspanWidget';
   static const LearnPage = '/LearnPage';
+  static const HistoryPage = '/HistoryPage';
+
+
 }
 
 
@@ -146,6 +149,10 @@ abstract class AppPages {
     GetPage(
       name: Routes.LearnPage,
       page: () => LearnPage(),
+    ),
+    GetPage(
+      name: Routes.HistoryPage,
+      page: () => HistoryPage(),
     ),
   ];
 }

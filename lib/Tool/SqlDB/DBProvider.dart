@@ -8,18 +8,14 @@ import 'dart:developer';
 class DBProvider{
 
    static const String DB_NAME = "translation.db";
-
    static const String TB_NOTRBOOKLIST = "tb_notebookList";
    static const String TB_NOTEBOOKCONTENT = "tb_notebookContent";
-
    static const String TB_DOCLIST = "tb_docList";
    static const String TB_DOCONTENT = "tb_doccontentList";
 
    DBProvider._privateConstructor();
-
    static final DBProvider instance = DBProvider._privateConstructor();
    static Database _database;
-
 
    Future<Database> get database async {
      if (_database != null) {

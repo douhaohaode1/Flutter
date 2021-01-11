@@ -8,6 +8,8 @@ import 'package:flutter_demo/Widget/ItemWidget.dart';
 import 'package:flutter_demo/Config/Theme/APPTheme.dart';
 import 'package:get/get.dart';
 import 'package:flutter_demo/Page/HomePage1.dart';
+import 'package:flutter_demo/Tool/SqlDB/DatabaseHelper.dart';
+import 'package:sqflite/sqflite.dart';
 
 /// 加载状态
 enum LoadMoreStatue{
@@ -21,8 +23,11 @@ enum LoadMoreStatue{
 
 class HomePage extends StatelessWidget {
 
+  static Future<Database> _database;
   @override
   Widget build(BuildContext context) {
+
+    _database =  DatabaseHelper.instance.database;
 
     List <Widget> tarList = [Tab(text: 'First'.tr,),Tab(text: 'Second'.tr, ),Tab( text: 'Third'.tr,)];
 

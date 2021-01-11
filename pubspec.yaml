@@ -60,6 +60,8 @@ dependencies:
 
   permission_handler: 5.0.1+1  #权限相关
 
+  date_format: ^1.0.9
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0

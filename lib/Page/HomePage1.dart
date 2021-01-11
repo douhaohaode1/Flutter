@@ -117,12 +117,11 @@ class HomePage1 extends StatelessWidget {
         if (row == 12){
           Get.toNamed(Routes.TextspanWidget);
         }
-
+        if (row == 13){
+          Get.toNamed(Routes.HistoryPage);
+        }
         print("111111");
-
       },
-
-
     );
   }
   Widget buildListData2(context, index) {
