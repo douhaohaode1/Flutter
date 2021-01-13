@@ -6,6 +6,7 @@ import 'main.reflectable.dart';
 import 'package:flutter_demo/Config/Routes/RoutesManage.dart';
 import 'package:flutter_demo/Config/Global/GlobalManange.dart';
 import 'dart:ui' as ui;
+import 'package:flutter/services.dart';
 
 void main() {
 
@@ -14,6 +15,16 @@ void main() {
 
   print(ui.window.locale.languageCode);
   print(ui.window.locale.countryCode);
+
+
+
+
+  // // 强制竖屏
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitDown
+  // ]);
+
 
   runApp(GetMaterialApp(
     translations: GlobalManange(),

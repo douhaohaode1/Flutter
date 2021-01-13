@@ -79,7 +79,8 @@ class HomePage1 extends StatelessWidget {
       onTap: () {
 
         if (row == 0){
-          Get.toNamed(Routes.TypeWeiter);
+          Get.toNamed(Routes.DecontaminationPage);
+          //Get.toNamed(Routes.DecontaminationPage);
         }
         if (row == 1){
           Get.toNamed(Routes.LoadStuff);
@@ -120,6 +121,11 @@ class HomePage1 extends StatelessWidget {
         if (row == 13){
           Get.toNamed(Routes.HistoryPage);
         }
+        if (row == 14){
+          Get.toNamed(Routes.TypeWeiter);
+        }
+        //Get.toNamed(Routes.TypeWeiter);
+
         print("111111");
       },
     );
@@ -154,13 +160,13 @@ class HomePage1 extends StatelessWidget {
 
   // 数据源
   List<String> titleItems = <String>[
-    'type Weiter', 'Load Stuff Button',
+    '除染', 'Load Stuff Button',
     'particle_background', 'FancyBackGroud',
     'PositionedTran', 'FadeTransition',
     'ScaleAnimaition', 'ScaleAnimationExample',
     'AnimatedPhysical', 'AnimatedDefaultTextStyle',
     'TransformExample', '平移动画',
-    '富文本', 'ac_unit',
+    '富文本', 'ac_unit', 'TypeWeiter',
   ];
 
   List<Icon> iconItems = <Icon>[
@@ -171,16 +177,17 @@ class HomePage1 extends StatelessWidget {
     new Icon(Icons.wifi_lock), new Icon(Icons.widgets),
     new Icon(Icons.weekend), new Icon(Icons.web),
     new Icon(Icons.accessible), new Icon(Icons.ac_unit),
+    new Icon(Icons.accessible),
   ];
 
   List<String> subTitleItems = <String>[
-    '文本自动输入显示动画', '点击按钮加载动作，后完成动作',
+    '除染', '点击按钮加载动作，后完成动作',
     '会动的气泡和背景颜色', '波浪的背景图片',
     '移动两个按钮', '文字渐现',
     '图片放大', '图片阴影',
     '文字变换', '移动视图',
     '位置移动', 'subTitle: web',
-    'subTitle: accessible', 'subTitle: ac_unit',
+    'subTitle: accessible', 'subTitle: ac_unit', '文本自动输入显示动画',
   ];
 
   //动态列表数据：

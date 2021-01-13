@@ -2,8 +2,6 @@
 import 'package:json_annotation/json_annotation.dart';
 part 'TranslationModel.g.dart';
 
-
-
 @JsonSerializable()
 class TranslationModel{
 
@@ -50,4 +48,36 @@ class TransResultModle{
 
     factory TransResultModle.fromJson(Map<String, dynamic> json) =>
         _$TransResultModleFromJson(json);
+}
+
+
+@JsonSerializable()
+class TransListModle{
+
+  final String form;
+  final String goto;
+  final int id;
+  final String title;
+  final String subtitle;
+  final String createData;
+  final String src;
+  final String dst;
+  final String updateData;
+  final int number;
+
+  TransListModle(
+      this.form,
+      this.goto,
+      this.id,
+      this.title,
+      this.subtitle,
+      this.createData,
+      this.src,
+      this.dst,
+      this.updateData,
+      this.number,
+      );
+
+  factory TransListModle.fromJson(Map<String, dynamic> json) =>
+      _$TransListModleFromJson(json);
 }

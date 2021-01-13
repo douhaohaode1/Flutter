@@ -16,11 +16,9 @@ class HistoryPage extends StatefulWidget{
 class _HistoryPageState extends State<HistoryPage> {
 
   // 数据集
-  List<TranslationModel> contentList = <TranslationModel>[];
-
+  List<TransListModle> contentList = <TransListModle>[];
  // 数据库单例
   static DatabaseHelper  instance = DatabaseHelper.instance;
-
 
   @override
   void initState(){
@@ -30,7 +28,6 @@ class _HistoryPageState extends State<HistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-
 
     return Scaffold(
       appBar: AppBar(
@@ -42,24 +39,22 @@ class _HistoryPageState extends State<HistoryPage> {
            CustomScrollView(
              slivers: <Widget>[
                 SliverPadding( //设置内边距
-                 padding: EdgeInsets.all(10),
+                 padding: EdgeInsets.all(20),
                   sliver: SliverGrid(
                       delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
                         return Container(
                           alignment: Alignment.center,
                           color: Colors.greenAccent,
-                          //child: Text(contentList[index].from),
-                          //print()
-                          child: Text(contentList[index].from),
-
+                          child: Text(contentList[index].createData),
                         );
                       },
                       childCount: contentList.length //数量
                   ), gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 1, //一个几个item?
-                  mainAxisSpacing: 8, //item上下间隔
-                  crossAxisSpacing: 8, //item左右间隔
+                  mainAxisSpacing: 20, //item上下间隔
+                  childAspectRatio: 1.3, //子元素在横轴长度和主轴长度的比例
+                    //crossAxisSpacing: 8, //item左右间隔
                )),
             ),
           ],
@@ -71,18 +66,16 @@ class _HistoryPageState extends State<HistoryPage> {
             ),
             color: Theme.of(context).primaryColor,
             onPressed: () {
-              setState(() {
 
-                 insertData();
-
-              });
+              insertData();
+              //setState(() {
+            //  });
             },
           )
         ],
       ),
     );
   }
-
 
   void insertData() async {
     await instance.open();
@@ -91,42 +84,29 @@ class _HistoryPageState extends State<HistoryPage> {
     par['form'] = '英文';
     par['src'] = '苹果';
     par['dst'] = 'apple';
-    par['createData'] = formatDate(DateTime.now() ,['yyyy', '-', 'mm', '-', 'dd' 'HH', ':', 'nn', ':', 'ss']);
+   // final f = new DateFormat();
+    par['createData'] = formatDate(DateTime.now() ,['yyyy', '-', 'mm', '-', 'dd' ,' ','HH', ':', 'mm', ':', 'ss']);
     int flag = await instance.insertByHelper('tb_history', par);
     //int flag = await dbUtil.insert('INSERT INTO relation(uid, fuid, type) VALUES("111111", "2222222", 1)');
-    print('flag:$flag');
     await instance.close();
-
     queryData();
-    setState(() {
-
-    });
   }
 
   void queryData() async{
 
     await instance.open();
     List<Map> data = await instance.queryList("SELECT * FROM tb_history");
-    //List<Map> data = await dbUtil.queryListByHelper('relation', ['id','uid','fuid','type'], 'uid=?', [5]);
-    print('data：$data');
 
-    // String showdata = "";
-    // if(data == null){
-    //   showdata = "";
-    // }
-      //contentList
-      List<TranslationModel> datas = data
-          .map<TranslationModel>(
-              (item) => TranslationModel.fromJson(item))
+    List<TransListModle> datas = data.map(
+            (item){ return TransListModle.fromJson(item); })
           .toList();
-
-    //print(contentList[0].form);
 
      contentList = datas;
     await instance.close();
 
+    setState(() {
+
+    });
   }
-
-
 
 }

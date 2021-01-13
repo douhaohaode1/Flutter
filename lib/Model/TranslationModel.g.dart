@@ -49,3 +49,32 @@ Map<String, dynamic> _$TransResultModleToJson(TransResultModle instance) =>
       'dst_tts': instance.dst_tts,
       'dict': instance.dict,
     };
+
+TransListModle _$TransListModleFromJson(Map<String, dynamic> json) {
+  return TransListModle(
+    json['form'] as String,
+    json['goto'] as String,
+    json['id'] as int,
+    json['title'] as String,
+    json['subtitle'] as String,
+    json['createData'] as String,
+    json['src'] as String,
+    json['dst'] as String,
+    json['updateData'] as String,
+    json['number'] as int,
+  );
+}
+
+Map<String, dynamic> _$TransListModleToJson(TransListModle instance) =>
+    <String, dynamic>{
+      'form': instance.form,
+      'goto': instance.goto,
+      'id': instance.id,
+      'title': instance.title,
+      'subtitle': instance.subtitle,
+      'createData': instance.createData,
+      'src': instance.src,
+      'dst': instance.dst,
+      'updateData': instance.updateData,
+      'number': instance.number,
+    };
