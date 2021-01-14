@@ -27,6 +27,8 @@ import 'package:flutter_demo/Widget/TextspanWidget.dart';
 import 'package:flutter_demo/Modules/Learn/LearnPage.dart';
 import 'package:flutter_demo/Modules/History/HistoryPage.dart';
 import 'package:flutter_demo/Modules/decontamination/decontamination_page.dart';
+import 'package:flutter_demo/Modules/decontamination/decontamination_update_page.dart';
+import 'package:flutter_demo/Modules/decontamination/qr_code_scanner_page.dart';
 
 
 abstract class Routes {
@@ -56,8 +58,9 @@ abstract class Routes {
   static const LearnPage = '/LearnPage';
   static const HistoryPage = '/HistoryPage';
   static const DecontaminationPage = '/DecontaminationPage';
+  static const DecontaminationUpdatePage = '/DecontaminationUpdatePage';
+  static const QRSeannerView = '/QRSeannerView';
 }
-
 
 abstract class AppPages {
 
@@ -158,6 +161,15 @@ abstract class AppPages {
       name: Routes.DecontaminationPage,
       page: () => DecontaminationPage(),
     ),
+    GetPage(
+      name: Routes.DecontaminationUpdatePage,
+      page: () => DecontaminationUpdatePage(),
+    ),
+    GetPage(
+      name: Routes.QRSeannerView,
+      page: () => QRSeannerView(),
+    ),
   ];
 }
+
 

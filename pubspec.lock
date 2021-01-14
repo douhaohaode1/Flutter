@@ -590,6 +590,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.6.3"
+  qr_code_scanner:
+    dependency: "direct main"
+    description:
+      name: qr_code_scanner
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.3.0"
   quiver:
     dependency: transitive
     description:

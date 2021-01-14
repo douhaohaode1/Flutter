@@ -1,42 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_demo/Animations/TypeWeiter.dart';
+import 'package:flutter_demo/Config/Routes/RoutesManage.dart';
+import 'package:get/get.dart';
 
 enum DecontaminationCellStyle {
   non,
   record,
   descrpotion,
   menu,
+  comment,
 }
-
 class DecontaminationItems extends StatefulWidget{
+
+  DecontaminationItems({this.style,this.itemModels,this.model,this.length,this.menuList,});
 
   final DecontaminationCellStyle style;
   final List itemModels;
-  final  model;
   final List menuList;
+  final  model;
   final int length;
-
-  DecontaminationItems({this.style,this.itemModels,this.model,this.length,this.menuList});
 
   @override
   _DecontaminationItemsState createState() => _DecontaminationItemsState();
+
 }
 
 class _DecontaminationItemsState extends State<DecontaminationItems> {
 
   static const Color appThemColor = Color(0xff113a70);
-
   static const Color TextThemColor = Color(0xff3d3d3d);
-
-  static const TextStyle appTitleTextStyle = TextStyle(color: TextThemColor,fontSize: 16 ,);
-
-
-  //,fontWeight: FontWeight.bold
- // static const TextStyle appButtonThemColor = TextStyle(color: Colors.white,fontSize: 19,fontWeight: FontWeight.bold);
+  static const TextStyle appTitleColorTextStyle = TextStyle(color: TextThemColor,fontSize: 16 ,);
+  static const TextStyle appThemColorTextStyle = TextStyle(color: appThemColor,fontSize: 16 ,);
 
   @override
   Widget build(BuildContext context) {
-
     switch(widget.model["style"]){
       case DecontaminationCellStyle.non:
         return buildNonItem(context);
@@ -50,94 +48,174 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
       case DecontaminationCellStyle.menu:
         return buildMenuItem(context);
         break;
+      case DecontaminationCellStyle.comment:
+        return buildCommentTextFiled(context);
+        break;
       default:
         break;
     }
   }
-
   Widget buildNonItem(BuildContext context){
-
     return Container(
-        padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
-    // alignment: Alignment.centerLeft,
-          // child: Text(),
+      padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
+          child: Row(
+            children: [
+              Container(
+                width: 100,
+                child: Text(widget.model["title"],style: appThemColorTextStyle,textAlign:TextAlign.left),
+              ),
+              Expanded(
+                  child:Text(widget.model["content"],style: appTitleColorTextStyle,textAlign:TextAlign.left,maxLines: 20,),
+              ),
+            ],
+        ),
     );
   }
-
   Widget buildRecordItem(BuildContext context){
+
+    final controller = TextEditingController();
+    controller.text =  widget.model["content"];
+    controller.addListener(() {
+      print('input ${controller.text}');
+    });
 
     return  Container(
           padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
            child: Column(
              crossAxisAlignment: CrossAxisAlignment.start,
              children: <Widget>[
-              Text(widget.model["title"],style: appTitleTextStyle,textAlign:TextAlign.left),
+              Text(widget.model["title"],style: appTitleColorTextStyle,textAlign:TextAlign.left),
               SizedBox(height: 10),
-              Container(
-                  padding: const EdgeInsets.all(8.0),
-                  alignment: Alignment.center,
-                  height: 44.0,
-                  decoration: BoxDecoration(
-                  //color: Colors.blueGrey,
-                  border:  Border.all(color: appThemColor, width: 1.0),
-                  borderRadius:  BorderRadius.circular(6.0)),
-                  child:  TextFormField(
-                    decoration: InputDecoration.collapsed(hintText: 'hello'),
-                  ),
-              ),
-              // TextField(
-              //   //enabled: false,
-              //   decoration: InputDecoration(contentPadding: EdgeInsets.all(8.0),
-              //     border: Border.all(color: Colors.black54, width: 4.0),
-              //     hintText: '扫码填入',
-              //     labelText: widget.model["content"],
-              //     labelStyle: appTitleTextStyle,
-              //     suffixIcon: IconButton(
-              //         icon: Icon(Icons.camera_alt_outlined),
-              //       onPressed: () {
-              //           print("照相");
-              //       },
-              //     ),
-              //   ),
-              // ),
-            ],
-          ),
-    );
-
+                  Container(
+                    height: 44,
+                     child:  TextField(
+                    controller: controller,
+                    inputFormatters: [LengthLimitingTextInputFormatter(25)],
+                    decoration: InputDecoration(
+                         contentPadding: EdgeInsets.symmetric(vertical: 4.0,horizontal:8.0),
+                         enabledBorder: OutlineInputBorder(
+                           borderSide: BorderSide(color: appThemColor, width: 1)
+                           ),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: appThemColor, width: 1)
+                          ),
+                      suffixIcon: IconButton(
+                          icon: Icon(Icons.camera_alt_outlined ,
+                          color: appThemColor,size: 44,),
+                          padding: EdgeInsets.all(2),
+                          onPressed: () {
+                            print("扫码");
+                            Get.toNamed(Routes.QRSeannerView);
+                          },
+                        ),
+                      ),
+                    ),
+                ),
+              ],
+            ),
+      );
   }
-
   Widget buildDescrpotionItem(BuildContext context) {
-
     return Container(
       padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
       child:  Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(widget.model["title"],style: appTitleTextStyle,textAlign:TextAlign.left),
+          Text(widget.model["title"],style: appTitleColorTextStyle,textAlign:TextAlign.left),
           SizedBox(height: 10),
-          Text("   ${widget.model["content"]}",style: appTitleTextStyle,textAlign:TextAlign.left),
+          Text("   ${widget.model["content"]}",style: appTitleColorTextStyle,textAlign:TextAlign.left),
         ],
       ),
     );
   }
+  List<DropdownMenuItem> buildMenuItems(List list){
+
+  }
 
   Widget buildMenuItem(BuildContext context) {
-    return  Card(
-      clipBehavior: Clip.antiAlias,
-      color: Colors.white, // 背景色
-      shadowColor: Colors.lightBlue, // 阴影颜色
-      elevation: 5, // 阴影高度
-      borderOnForeground: false, // 是否在 child 前绘制 border，默认为 true
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10), // 设置圆角
-        side: BorderSide(                        // 边框
-          color: Colors.black12,
-          width: 1,
-        ),
-      ),
+    return  Container(
+      padding: EdgeInsets.fromLTRB(30, 5, 30, 5),
+      //color: Colors.grey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+        Text(widget.model["title"],style: appThemColorTextStyle,textAlign:TextAlign.left),
+        SizedBox(height: 5),
+        Container(
+            height: 44,
+            decoration: BoxDecoration(
+            border: Border.all(color: appThemColor, width: 1),
+            borderRadius: BorderRadius.vertical(
+                  top: Radius.elliptical(4, 4),
+                  bottom: Radius.elliptical(4, 4)),
+            ),
+          child: DropdownButton(
+            underline: Container(height: 1),
+            isExpanded: true,
+            icon: Icon(Icons.arrow_drop_down,color: appThemColor,),
+            iconSize: 44,
+            items: [
+              DropdownMenuItem(child: Container(
+                 padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
+                  child:Text('中文',style: appTitleColorTextStyle),) ,
+              ),
+              DropdownMenuItem(child: Container(
+                padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
+                child:Text('中文',style: appTitleColorTextStyle),) ,
+              ),
+              DropdownMenuItem(child: Container(
+                padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
+                child:Text('中文',style: appTitleColorTextStyle),) ,
+              ),
+              DropdownMenuItem(child: Container(
+                padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
+                child:Text('中文',style: appTitleColorTextStyle),) ,
+              ),
+              DropdownMenuItem(child: Container(
+                padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
+                child:Text('中文',style: appTitleColorTextStyle),) ,
+              ),
+              DropdownMenuItem(child: Container(
+                padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
+                child:Text('中文',style: appTitleColorTextStyle),) ,
+              ),],
+            onChanged: (value){
+              print(value);
+            },
+          ),
+        ),
+       ],
+      ),
+    );
+  }
+  Widget buildCommentTextFiled(BuildContext context){
+
+    final controller = TextEditingController();
+    //controller.text =  widget.model["content"];
+    controller.addListener(() {
+      print('input ${controller.text}');
+    });
+    return  Container(
+      padding: EdgeInsets.fromLTRB(30, 5, 30, 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height :15),
+          Text(widget.model["title"],style: appThemColorTextStyle,textAlign:TextAlign.left),
+          SizedBox(height: 5),
+          Container(
+            alignment: Alignment.center,
+            //height: 150.0,
+            child:  TextField(
+              maxLines: 6,
+              controller: controller,
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: appThemColor, width: 1)),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: appThemColor, width: 1)),
+            ),
+           ),
+          ),
         ],
       ),
     );

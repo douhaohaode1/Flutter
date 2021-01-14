@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'decontamination_widget.dart';
-import 'package:get/get.dart';
-import 'package:flutter_demo/Config/Routes/RoutesManage.dart';
 
-
-class DecontaminationPage extends StatefulWidget{
+class DecontaminationUpdatePage extends StatefulWidget{
   @override
-  _DecontaminationPageState  createState() => _DecontaminationPageState();
+  _DecontaminationUpdatePageState  createState() => _DecontaminationUpdatePageState();
 }
 
-class _DecontaminationPageState extends State<DecontaminationPage>{
+class _DecontaminationUpdatePageState extends State<DecontaminationUpdatePage>{
 
   static const Color appThemColor = Color(0xff113a70);
   static const TextStyle appButtonThemColor = TextStyle(color: Colors.white,fontSize: 19,fontWeight: FontWeight.bold);
   var constructionData = [
-                  {"title": "机器码UPN","content" :"H&491LAB100C27Z0","style":DecontaminationCellStyle.record},
-                  {"title": "Description","content" :"i-Lab CART System Zeron","style":DecontaminationCellStyle.descrpotion},
-                  {"title": "机器番号","content" :"10086","hintText":"扫码填入","style":DecontaminationCellStyle.record},
-                  ];
+    {"title": "UPN","content" :"H7849IAB100C27X0","style":DecontaminationCellStyle.non},
+    {"title": "Description","content" :"i-Lab CART System Zerons","style":DecontaminationCellStyle.non},
+    {"title": "Serial","content" :"10068","style":DecontaminationCellStyle.non},
+    {"title": "* Unit Yype Code","content" :"","style":DecontaminationCellStyle.menu},
+    {"title": "* StatusCode","content" :"","style":DecontaminationCellStyle.menu},
+    {"title": "Reason Code","content" :"","style":DecontaminationCellStyle.menu},
+    {"title": "Comment","content" :"","style":DecontaminationCellStyle.comment},
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,9 +37,9 @@ class _DecontaminationPageState extends State<DecontaminationPage>{
                 child: ListView.builder(
                   itemCount: constructionData.length,
                   itemBuilder: (c, i) =>
-                        DecontaminationItems(
-                          model: constructionData[i],
-                     ),
+                      DecontaminationItems(
+                        model: constructionData[i],
+                      ),
                 )
             ),
             ///下面控件位于Column布局底部
@@ -46,14 +47,29 @@ class _DecontaminationPageState extends State<DecontaminationPage>{
               color: Colors.white,
               padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end, //平均分配
+                mainAxisAlignment: MainAxisAlignment.spaceBetween, //平均分配
                 children: <Widget>[
+                  SizedBox(
+                    width: (MediaQuery.of(context).size.width - 30)/2, // 宽度无限，跟父控件保持一致
+                    height: 44,
+                    child:  RaisedButton(
+                      child: Text('检测', style: appButtonThemColor),
+                      color: appThemColor,
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: Colors.white,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8)),
+                      onPressed: () {},
+                    ),
+                  ),
                   SizedBox(
                     width: (MediaQuery.of(context).size.width - 30)/2,
                     height: 44,
                     child:  RaisedButton(
                       color: appThemColor,
-                      child: Text('检测',style: appButtonThemColor),
+                      child: Text('更新',style: appButtonThemColor),
                       shape: RoundedRectangleBorder(
                           side: BorderSide(
                             color: Colors.white,
@@ -61,7 +77,7 @@ class _DecontaminationPageState extends State<DecontaminationPage>{
                           ),
                           borderRadius: BorderRadius.circular(8)),
                       onPressed: () {
-                        Get.toNamed(Routes.DecontaminationUpdatePage);
+
                       },
                     ),
                   )

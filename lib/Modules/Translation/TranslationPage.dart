@@ -18,14 +18,11 @@ class TranslationPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     String input = '';
+
     final controller = TextEditingController();
-
     controller.addListener(() {
-
       input =  controller.text;
-
       print('input ${controller.text}');
-
     });
 
     return Scaffold(
@@ -61,11 +58,12 @@ class TranslationPage extends StatelessWidget {
                        //   print('change $text');
                        // },
                        onSubmitted: (text) {//内容提交(按回车)的回调
-
                         // print('submit $text');
                        },
                        enabled: true,//是否禁用
-                       decoration: InputDecoration(hintText: '输入翻译内容', border: OutlineInputBorder(),
+                       decoration: InputDecoration(
+                         hintText: '输入翻译内容',
+                         border: OutlineInputBorder(),
                          //  counter: Text("自定义计数 0/100"),
                          suffixIcon: IconButton(
                            icon: Icon(Icons.close),
@@ -143,12 +141,9 @@ class TranslationPage extends StatelessWidget {
       ),
       trailing: new Icon(Icons.keyboard_arrow_right),
       onTap: () {
-
         //print("333");
-
         //focusNode.unfocus();
         Get.toNamed(Routes.LearnPage);
-
       },
 
     );

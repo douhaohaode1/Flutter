@@ -96,7 +96,6 @@ class _SlideTranstionWidgetState extends State< SlideTranstionWidget> with Singl
                  height: 40,
                //  color: Colors.blueAccent,
                  child: DropdownButton(
-
                         icon: Icon(Icons.arrow_drop_down,color: Colors.green,),
                          items: [DropdownMenuItem(child: Text('中文')),
                                  DropdownMenuItem(child: Text('英文')),
