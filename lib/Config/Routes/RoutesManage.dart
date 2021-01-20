@@ -165,10 +165,10 @@ abstract class AppPages {
       name: Routes.DecontaminationUpdatePage,
       page: () => DecontaminationUpdatePage(),
     ),
-    GetPage(
-      name: Routes.QRSeannerView,
-      page: () => QRSeannerView(),
-    ),
+    // GetPage(
+    //   name: Routes.QRSeannerView,
+    //   page: () => QRSeannerView(),
+    // ),
   ];
 }
 

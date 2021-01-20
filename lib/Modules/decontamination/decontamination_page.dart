@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
+import 'decontamination_update_page.dart';
 import 'decontamination_widget.dart';
 import 'package:get/get.dart';
 import 'package:flutter_demo/Config/Routes/RoutesManage.dart';
+import 'decontamintaion_model.dart';
+import 'decontamintaion_view_model.dart';
+import 'initialize_providers.dart';
 
 
 class DecontaminationPage extends StatefulWidget{
@@ -13,33 +19,46 @@ class _DecontaminationPageState extends State<DecontaminationPage>{
 
   static const Color appThemColor = Color(0xff113a70);
   static const TextStyle appButtonThemColor = TextStyle(color: Colors.white,fontSize: 19,fontWeight: FontWeight.bold);
-  var constructionData = [
-                  {"title": "机器码UPN","content" :"H&491LAB100C27Z0","style":DecontaminationCellStyle.record},
-                  {"title": "Description","content" :"i-Lab CART System Zeron","style":DecontaminationCellStyle.descrpotion},
-                  {"title": "机器番号","content" :"10086","hintText":"扫码填入","style":DecontaminationCellStyle.record},
-                  ];
+
+
+ // List<SingleChildWidget> providers =
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: appThemColor,
-        title: Text("Boston\nScientific",style: TextStyle(color: Colors.white),textAlign: TextAlign.center),
-        centerTitle: true,
-      ),
-      body:  Container(
+    return   Scaffold(
+              appBar: AppBar(
+                  backgroundColor: appThemColor,
+                    title: Text("Boston\nScientific",style: TextStyle(color: Colors.white),textAlign: TextAlign.center),
+                    centerTitle: true,),
+                  body: Consumer<DecontamintaionViewModel>(
+                    builder: (ctx ,vm,child){
+                  return body(vm);
+           },
+        ),
+    );
+  }
+
+
+  Widget body(vm){
+
+    return Container(
         color: Colors.white,
         height: MediaQuery.of(context).size.height,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
-                child: ListView.builder(
-                  itemCount: constructionData.length,
-                  itemBuilder: (c, i) =>
-                        DecontaminationItems(
-                          model: constructionData[i],
-                     ),
-                )
+              child: Consumer<DecontamintaionViewModel>(
+                builder: (ctx, decontamintaionVM, child) {
+                  print("data02 Consumer build方法被执行");
+                  return ListView(
+                    children: <Widget>[
+                      DecontaminationItems(model: decontamintaionDetectStyles[0],value:decontamintaionVM.model.upn),
+                      DecontaminationItems(model: decontamintaionDetectStyles[1],value:decontamintaionVM.model.description),
+                      DecontaminationItems(model: decontamintaionDetectStyles[2],value:decontamintaionVM.model.serial),
+                    ],
+                  );
+                },
+              ),
             ),
             ///下面控件位于Column布局底部
             Container(
@@ -61,7 +80,10 @@ class _DecontaminationPageState extends State<DecontaminationPage>{
                           ),
                           borderRadius: BorderRadius.circular(8)),
                       onPressed: () {
-                        Get.toNamed(Routes.DecontaminationUpdatePage);
+                        //context.read<DecontamintaionViewModel>().changeModel(context,upn: "12dasdasdasdasdasd");
+
+                        Get.to(DecontaminationUpdatePage());
+
                       },
                     ),
                   )
@@ -70,7 +92,6 @@ class _DecontaminationPageState extends State<DecontaminationPage>{
             )
           ],
         ),
-      ),
       //bodyListView(context),
     );
   }

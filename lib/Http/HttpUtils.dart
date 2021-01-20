@@ -26,6 +26,8 @@ class HttpUtils {
       ..connectTimeout = 5000
       ..receiveTimeout = 3000;
 
+    options.contentType = "application/x-www-form-urlencoded";
+
     dio = Dio(options);
 
     ///_dioCacheManager = DioCacheManager(CacheConfig(baseUrl: API.baseUrl));
@@ -38,8 +40,12 @@ class HttpUtils {
       ..add(InterceptorsWrapper(onRequest: (RequestOptions options) {
         //请求拦截器
         print("------------------>>>>>>>>发送请求<<<<<<<————————————————————");
+        print("请求整体URL:${options.uri}");
+
         print("请求方法:${options.method}");
         print("请求头:${options.headers}");
+        print("请求任何参数:${options.data}");
+
         print("请求参数:${options.queryParameters}");
         print("请求路径:${options.baseUrl}${options.path}");
         // Do something before request is sent

@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_demo/Animations/TypeWeiter.dart';
 import 'package:flutter_demo/Config/Routes/RoutesManage.dart';
+import 'package:flutter_demo/Modules/decontamination/qr_code_scanner_page.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+
+import 'decontamintaion_view_model.dart';
 
 enum DecontaminationCellStyle {
   non,
@@ -13,12 +17,13 @@ enum DecontaminationCellStyle {
 }
 class DecontaminationItems extends StatefulWidget{
 
-  DecontaminationItems({this.style,this.itemModels,this.model,this.length,this.menuList,});
+  DecontaminationItems({this.style,this.itemModels,this.model,this.length,this.menuList,this.value});
 
   final DecontaminationCellStyle style;
   final List itemModels;
   final List menuList;
   final  model;
+  final  value;
   final int length;
 
   @override
@@ -65,7 +70,7 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
                 child: Text(widget.model["title"],style: appThemColorTextStyle,textAlign:TextAlign.left),
               ),
               Expanded(
-                  child:Text(widget.model["content"],style: appTitleColorTextStyle,textAlign:TextAlign.left,maxLines: 20,),
+                  child:Text(widget.value,style: appTitleColorTextStyle,textAlign:TextAlign.left,maxLines: 20,),
               ),
             ],
         ),
@@ -74,7 +79,7 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
   Widget buildRecordItem(BuildContext context){
 
     final controller = TextEditingController();
-    controller.text =  widget.model["content"];
+    controller.text =  widget.value;
     controller.addListener(() {
       print('input ${controller.text}');
     });
@@ -104,8 +109,10 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
                           color: appThemColor,size: 44,),
                           padding: EdgeInsets.all(2),
                           onPressed: () {
-                            print("扫码");
-                            Get.toNamed(Routes.QRSeannerView);
+                            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => QRSeannerView(widget.model["mark"])));
+                            //Get.to(QRSeannerView());
+                            //Get.toNamed(Routes.QRSeannerView);
+
                           },
                         ),
                       ),
@@ -123,16 +130,59 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
         children: <Widget>[
           Text(widget.model["title"],style: appTitleColorTextStyle,textAlign:TextAlign.left),
           SizedBox(height: 10),
-          Text("   ${widget.model["content"]}",style: appTitleColorTextStyle,textAlign:TextAlign.left),
+          Text("   ${widget.value}",style: appTitleColorTextStyle,textAlign:TextAlign.left),
         ],
       ),
     );
   }
-  List<DropdownMenuItem> buildMenuItems(List list){
 
+  List<DropdownMenuItem> buildMenuItems(String mark){
+     List menu;
+      if (mark == 'unitYypeCode'){
+        menu = [{"name":"1231","id":1},{"name":"23232","id":2},{"name":"44533","id":3}];
+      }
+      if (mark == 'tatusCode')   {
+        menu =  [{"name":"fsfsdfs","id":1},{"name":"adasdasdas","id":2},{"name":"ccasdad","id":3}];
+      }
+      if (mark == 'reasonCode')  {
+        menu =  [{"name":"aaaaaa","id":1},{"name":"bbbbbb","id":2},{"name":"ccccccc","id":3}];
+      }
+      List<Widget> datas =  menu.asMap().keys.map((item)=>
+          DropdownMenuItem(
+            child: Container(
+              padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
+              child:Text( menu[item]['name'] ,style: appTitleColorTextStyle),),),).toList();
+      return  datas;
   }
 
+  List <DropdownMenuItem> menu =[
+    DropdownMenuItem(child: Container(
+      padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
+      child:Text('中文',style: appTitleColorTextStyle),) ,
+    ),
+    DropdownMenuItem(child: Container(
+      padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
+      child:Text('中文',style: appTitleColorTextStyle),) ,
+    ),
+    DropdownMenuItem(child: Container(
+      padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
+      child:Text('中文',style: appTitleColorTextStyle),) ,
+    ),
+    DropdownMenuItem(child: Container(
+      padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
+      child:Text('中文',style: appTitleColorTextStyle),) ,
+    ),
+    DropdownMenuItem(child: Container(
+      padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
+      child:Text('中文',style: appTitleColorTextStyle),) ,
+    ),
+    DropdownMenuItem(child: Container(
+      padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
+      child:Text('中文',style: appTitleColorTextStyle),) ,
+    ),];
+
   Widget buildMenuItem(BuildContext context) {
+
     return  Container(
       padding: EdgeInsets.fromLTRB(30, 5, 30, 5),
       //color: Colors.grey,
@@ -149,38 +199,27 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
                   top: Radius.elliptical(4, 4),
                   bottom: Radius.elliptical(4, 4)),
             ),
-          child: DropdownButton(
-            underline: Container(height: 1),
-            isExpanded: true,
-            icon: Icon(Icons.arrow_drop_down,color: appThemColor,),
-            iconSize: 44,
-            items: [
-              DropdownMenuItem(child: Container(
-                 padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
-                  child:Text('中文',style: appTitleColorTextStyle),) ,
-              ),
-              DropdownMenuItem(child: Container(
-                padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
-                child:Text('中文',style: appTitleColorTextStyle),) ,
-              ),
-              DropdownMenuItem(child: Container(
-                padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
-                child:Text('中文',style: appTitleColorTextStyle),) ,
-              ),
-              DropdownMenuItem(child: Container(
-                padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
-                child:Text('中文',style: appTitleColorTextStyle),) ,
-              ),
-              DropdownMenuItem(child: Container(
-                padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
-                child:Text('中文',style: appTitleColorTextStyle),) ,
-              ),
-              DropdownMenuItem(child: Container(
-                padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
-                child:Text('中文',style: appTitleColorTextStyle),) ,
-              ),],
-            onChanged: (value){
-              print(value);
+          child: Consumer<DecontamintaionViewModel>(
+            builder: (ctx, decontamintaionVM, child) {
+              return  DropdownButton(
+                underline: Container(height: 1),
+                isExpanded: true,
+                icon: Icon(Icons.arrow_drop_down,color: appThemColor,),
+                iconSize: 44,
+                //value: decontamintaionVM.model.reasonCode ?? "",
+                items:  buildMenuItems(widget.model['mark']) ,
+                //hint:new Text('dadf'),
+                onChanged: (T){
+                  print('value ==== $T');
+                  if (T != null){
+                    decontamintaionVM.changeModel(context,reasonCode: T);
+                  }
+                  if (widget.model["title"]== ""){
+                  }
+
+                //  print(T);
+                },
+              );
             },
           ),
         ),

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'decontamination_widget.dart';
+import 'decontamintaion_model.dart';
+import 'decontamintaion_view_model.dart';
 
 class DecontaminationUpdatePage extends StatefulWidget{
   @override
@@ -10,15 +13,7 @@ class _DecontaminationUpdatePageState extends State<DecontaminationUpdatePage>{
 
   static const Color appThemColor = Color(0xff113a70);
   static const TextStyle appButtonThemColor = TextStyle(color: Colors.white,fontSize: 19,fontWeight: FontWeight.bold);
-  var constructionData = [
-    {"title": "UPN","content" :"H7849IAB100C27X0","style":DecontaminationCellStyle.non},
-    {"title": "Description","content" :"i-Lab CART System Zerons","style":DecontaminationCellStyle.non},
-    {"title": "Serial","content" :"10068","style":DecontaminationCellStyle.non},
-    {"title": "* Unit Yype Code","content" :"","style":DecontaminationCellStyle.menu},
-    {"title": "* StatusCode","content" :"","style":DecontaminationCellStyle.menu},
-    {"title": "Reason Code","content" :"","style":DecontaminationCellStyle.menu},
-    {"title": "Comment","content" :"","style":DecontaminationCellStyle.comment},
-  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,13 +29,22 @@ class _DecontaminationUpdatePageState extends State<DecontaminationUpdatePage>{
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
-                child: ListView.builder(
-                  itemCount: constructionData.length,
-                  itemBuilder: (c, i) =>
-                      DecontaminationItems(
-                        model: constructionData[i],
-                      ),
-                )
+                child: Consumer<DecontamintaionViewModel>(
+                  builder: (ctx, decontamintaionVM, child) {
+                   // print("data02 Consumer build方法被执行");
+                    return ListView(
+                      children: [
+                        DecontaminationItems(model: decontamintaionUpateStyles[0],value: decontamintaionVM.model.upn,),
+                        DecontaminationItems(model: decontamintaionUpateStyles[1],value: decontamintaionVM.model.description,),
+                        DecontaminationItems(model: decontamintaionUpateStyles[2],value: decontamintaionVM.model.serial,),
+                        DecontaminationItems(model: decontamintaionUpateStyles[3],value: decontamintaionVM.model.unitTypeCode ,),
+                        DecontaminationItems(model: decontamintaionUpateStyles[4],value: decontamintaionVM.model.statusCode ,),
+                        DecontaminationItems(model: decontamintaionUpateStyles[5],value: decontamintaionVM.model.reasonCode ,),
+                        DecontaminationItems(model: decontamintaionUpateStyles[6],value: decontamintaionVM.model.comment,),
+                      ],
+                    );
+                  },
+                ),
             ),
             ///下面控件位于Column布局底部
             Container(
