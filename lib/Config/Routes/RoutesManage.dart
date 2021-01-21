@@ -60,6 +60,8 @@ abstract class Routes {
   static const DecontaminationPage = '/DecontaminationPage';
   static const DecontaminationUpdatePage = '/DecontaminationUpdatePage';
   static const QRSeannerView = '/QRSeannerView';
+
+
 }
 
 abstract class AppPages {
@@ -165,10 +167,7 @@ abstract class AppPages {
       name: Routes.DecontaminationUpdatePage,
       page: () => DecontaminationUpdatePage(),
     ),
-    // GetPage(
-    //   name: Routes.QRSeannerView,
-    //   page: () => QRSeannerView(),
-    // ),
+
   ];
 }
 

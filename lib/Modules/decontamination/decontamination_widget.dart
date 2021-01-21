@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_demo/Animations/TypeWeiter.dart';
 import 'package:flutter_demo/Config/Routes/RoutesManage.dart';
+import 'package:flutter_demo/Modules/decontamination/decontamintaion_model.dart';
 import 'package:flutter_demo/Modules/decontamination/qr_code_scanner_page.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -15,17 +16,22 @@ enum DecontaminationCellStyle {
   menu,
   comment,
 }
-class DecontaminationItems extends StatefulWidget{
+enum DecontaminationMenuMark{
+  upnRecord,
+  serialRecord,
+  unitTypeCodeMenu,
+  statusCodeMenu,
+  reasonCodeMenu,
+}
 
-  DecontaminationItems({this.style,this.itemModels,this.model,this.length,this.menuList,this.value});
-
-  final DecontaminationCellStyle style;
-  final List itemModels;
+class DecontaminationItems <T> extends StatefulWidget{
+  DecontaminationItems({this.model,this.menuList,this.value});
+  //final DecontaminationCellStyle style;
+  //final List itemModels;
   final List menuList;
   final  model;
-  final  value;
-  final int length;
-
+  T  value;
+  //final int length;
   @override
   _DecontaminationItemsState createState() => _DecontaminationItemsState();
 
@@ -81,9 +87,9 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
     final controller = TextEditingController();
     controller.text =  widget.value;
     controller.addListener(() {
+      //return;
       print('input ${controller.text}');
     });
-
     return  Container(
           padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
            child: Column(
@@ -110,9 +116,6 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
                           padding: EdgeInsets.all(2),
                           onPressed: () {
                             Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => QRSeannerView(widget.model["mark"])));
-                            //Get.to(QRSeannerView());
-                            //Get.toNamed(Routes.QRSeannerView);
-
                           },
                         ),
                       ),
@@ -122,6 +125,7 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
             ),
       );
   }
+
   Widget buildDescrpotionItem(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
@@ -136,56 +140,35 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
     );
   }
 
-  List<DropdownMenuItem> buildMenuItems(String mark){
-     List menu;
-      if (mark == 'unitYypeCode'){
-        menu = [{"name":"1231","id":1},{"name":"23232","id":2},{"name":"44533","id":3}];
-      }
-      if (mark == 'tatusCode')   {
-        menu =  [{"name":"fsfsdfs","id":1},{"name":"adasdasdas","id":2},{"name":"ccasdad","id":3}];
-      }
-      if (mark == 'reasonCode')  {
-        menu =  [{"name":"aaaaaa","id":1},{"name":"bbbbbb","id":2},{"name":"ccccccc","id":3}];
-      }
-      List<Widget> datas =  menu.asMap().keys.map((item)=>
-          DropdownMenuItem(
-            child: Container(
-              padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
-              child:Text( menu[item]['name'] ,style: appTitleColorTextStyle),),),).toList();
-      return  datas;
+
+  List<DropdownMenuItem> buildMenuItems(DecontaminationMenuMark mark){
+    List menu;
+    if (mark ==  DecontaminationMenuMark.unitTypeCodeMenu){
+      menu = [{"name":"1231","id":'1'},{"name":"23232","id":'2'},{"name":"44533","id":'3'}];
+    }
+    if (mark ==   DecontaminationMenuMark.statusCodeMenu)   {
+      menu =  [{"name":"fsfsdfs","id":'4'},{"name":"adasdasdas","id":'5'},{"name":"ccasdad","id":'6'}];
+    }
+    if (mark ==   DecontaminationMenuMark.reasonCodeMenu)  {
+      menu =  [{"name":"aaaaaa","id":'7'},{"name":"bbbbbb","id":'8'},{"name":"ccccccc","id":'9'}];
+    }
+    var datas =  menu.asMap().keys.map((item)=>
+        DropdownMenuItem(
+          child: Container(
+            padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
+            child:Text( menu[item]['name'] ,style: appTitleColorTextStyle),
+          ),
+          value: menu[item]["id"],
+        ),
+    ).toList();
+    return  datas;
   }
 
-  List <DropdownMenuItem> menu =[
-    DropdownMenuItem(child: Container(
-      padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
-      child:Text('中文',style: appTitleColorTextStyle),) ,
-    ),
-    DropdownMenuItem(child: Container(
-      padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
-      child:Text('中文',style: appTitleColorTextStyle),) ,
-    ),
-    DropdownMenuItem(child: Container(
-      padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
-      child:Text('中文',style: appTitleColorTextStyle),) ,
-    ),
-    DropdownMenuItem(child: Container(
-      padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
-      child:Text('中文',style: appTitleColorTextStyle),) ,
-    ),
-    DropdownMenuItem(child: Container(
-      padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
-      child:Text('中文',style: appTitleColorTextStyle),) ,
-    ),
-    DropdownMenuItem(child: Container(
-      padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
-      child:Text('中文',style: appTitleColorTextStyle),) ,
-    ),];
+  String menuSelectValue;
 
   Widget buildMenuItem(BuildContext context) {
-
     return  Container(
       padding: EdgeInsets.fromLTRB(30, 5, 30, 5),
-      //color: Colors.grey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -202,22 +185,14 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
           child: Consumer<DecontamintaionViewModel>(
             builder: (ctx, decontamintaionVM, child) {
               return  DropdownButton(
+                items:  buildMenuItems(widget.model['mark']) ,
+                value: menuSelectValue,
                 underline: Container(height: 1),
                 isExpanded: true,
                 icon: Icon(Icons.arrow_drop_down,color: appThemColor,),
                 iconSize: 44,
-                //value: decontamintaionVM.model.reasonCode ?? "",
-                items:  buildMenuItems(widget.model['mark']) ,
-                //hint:new Text('dadf'),
-                onChanged: (T){
-                  print('value ==== $T');
-                  if (T != null){
-                    decontamintaionVM.changeModel(context,reasonCode: T);
-                  }
-                  if (widget.model["title"]== ""){
-                  }
-
-                //  print(T);
+                onChanged: (value){
+                  _onMenuChanged(context,value,decontamintaionVM);
                 },
               );
             },
@@ -227,12 +202,30 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
       ),
     );
   }
+  _onMenuChanged(BuildContext context,String value , DecontamintaionViewModel VM) {
+
+    if(widget.model['mark'] ==   DecontaminationMenuMark.unitTypeCodeMenu){
+      VM.changeModel(context,unitTypeCode: value);
+    }
+    if(widget.model['mark'] ==   DecontaminationMenuMark.statusCodeMenu){
+      VM.changeModel(context,statusCode: value);
+    }
+    if(widget.model['mark'] ==   DecontaminationMenuMark.reasonCodeMenu){
+      VM.changeModel(context,reasonCode: value);
+    }
+    setState(() {
+      menuSelectValue = value;
+    });
+  }
+
   Widget buildCommentTextFiled(BuildContext context){
 
-    final controller = TextEditingController();
-    //controller.text =  widget.model["content"];
+    DecontamintaionModle modle = Provider.of<DecontamintaionViewModel>(context).model;
+    TextEditingController controller = TextEditingController();
+    controller.text =  modle.comment;
     controller.addListener(() {
-      print('input ${controller.text}');
+       debugPrint('${controller.text}');
+       context.read<DecontamintaionViewModel>().changeComment(context,controller.text);
     });
     return  Container(
       padding: EdgeInsets.fromLTRB(30, 5, 30, 5),
@@ -243,17 +236,20 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
           SizedBox(height: 5),
           Container(
             alignment: Alignment.center,
-            //height: 150.0,
-            child:  TextField(
-              maxLines: 6,
-              controller: controller,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: appThemColor, width: 1)),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: appThemColor, width: 1)),
+            child:   Consumer<DecontamintaionViewModel>(
+              builder: (ctx, decontamintaionVM, child) {
+                return  TextField(
+                  maxLines: 6,
+                  controller: controller,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: appThemColor, width: 1)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: appThemColor, width: 1)),
+                  ),
+                );
+              },
             ),
-           ),
           ),
         ],
       ),

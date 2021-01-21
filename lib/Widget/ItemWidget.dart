@@ -53,19 +53,19 @@ class _ItemState extends State<ItemWidget> {
              * 第二个Container为盖在上面的文字。那么分析2这里的alignment就是调整第二个widget位置的属性。
              * Alignment将第一个widget的中心当作（0，0）坐标。所以这里的（0.0，0.9）就是如图的位置。
              * */
-            alignment: const Alignment(0.0, 0.9),
-            children: <Widget>[
-              CachedNetworkImage(
-                imageUrl: widget.model.envelopePic,
-                fit: BoxFit.fill,
-                width: width,
-                height: (width / 2 - 2 * wMargin - 25),
+              alignment: const Alignment(0.0, 0.9),
+                     children: <Widget>[
+                           CachedNetworkImage(
+                            imageUrl: widget.model.envelopePic,
+                            fit: BoxFit.fill,
+                           width: width,
+                           height: (width / 2 - 2 * wMargin - 25),
               ),
-              Text(
-                widget.model.chapterName,
-                style: new TextStyle(
-                  fontSize: 17.0,
-                  color: Colors.green,
+                    Text(
+                       widget.model.chapterName,
+                        style: new TextStyle(
+                         fontSize: 17.0,
+                         color: Colors.green,
                 ),
               ),
             ],

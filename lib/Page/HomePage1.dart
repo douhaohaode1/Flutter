@@ -3,6 +3,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:flutter_demo/Config/Routes/RoutesManage.dart';
 
+import 'MenuPage.dart';
+
 class HomePage1 extends StatelessWidget {
 
   @override
@@ -124,6 +126,9 @@ class HomePage1 extends StatelessWidget {
         if (row == 14){
           Get.toNamed(Routes.TypeWeiter);
         }
+        if (row == 15){
+          Get.to(MenuPage());
+        }
         //Get.toNamed(Routes.TypeWeiter);
 
         print("111111");
@@ -166,7 +171,7 @@ class HomePage1 extends StatelessWidget {
     'ScaleAnimaition', 'ScaleAnimationExample',
     'AnimatedPhysical', 'AnimatedDefaultTextStyle',
     'TransformExample', '平移动画',
-    '富文本', 'ac_unit', 'TypeWeiter',
+    '富文本', 'ac_unit', 'TypeWeiter',"菜单按钮",
   ];
 
   List<Icon> iconItems = <Icon>[
@@ -177,7 +182,7 @@ class HomePage1 extends StatelessWidget {
     new Icon(Icons.wifi_lock), new Icon(Icons.widgets),
     new Icon(Icons.weekend), new Icon(Icons.web),
     new Icon(Icons.accessible), new Icon(Icons.ac_unit),
-    new Icon(Icons.accessible),
+    new Icon(Icons.accessible), new Icon(Icons.ac_unit),
   ];
 
   List<String> subTitleItems = <String>[
@@ -187,7 +192,7 @@ class HomePage1 extends StatelessWidget {
     '图片放大', '图片阴影',
     '文字变换', '移动视图',
     '位置移动', 'subTitle: web',
-    'subTitle: accessible', 'subTitle: ac_unit', '文本自动输入显示动画',
+    'subTitle: accessible', 'subTitle: ac_unit', '文本自动输入显示动画','subTitle:菜单按钮',
   ];
 
   //动态列表数据：
@@ -254,6 +259,14 @@ class HomePage1 extends StatelessWidget {
       'date': '2020年12月26',
       'img':
       "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3322807488,4192238469&fm=26&gp=0.jpg"
+    },
+    {
+      'title': '动画',
+      'subjeck': '有效期限',
+      'isFavorites': 0,
+      'date': '2020年12月26',
+      'img':
+      "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3397537705,1180362904&fm=26&gp=0.jpg"
     },
   ];
 }

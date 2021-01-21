@@ -39,7 +39,6 @@ class _DecontaminationPageState extends State<DecontaminationPage>{
 
 
   Widget body(vm){
-
     return Container(
         color: Colors.white,
         height: MediaQuery.of(context).size.height,
@@ -80,9 +79,13 @@ class _DecontaminationPageState extends State<DecontaminationPage>{
                           ),
                           borderRadius: BorderRadius.circular(8)),
                       onPressed: () {
-                        //context.read<DecontamintaionViewModel>().changeModel(context,upn: "12dasdasdasdasdasd");
-
+                        context.read<DecontamintaionViewModel>().clear();
+                        // if(context.read<DecontamintaionViewModel>().check() == false){
+                        //   Get.to(DecontaminationUpdatePage());
+                        // }
                         Get.to(DecontaminationUpdatePage());
+
+
 
                       },
                     ),

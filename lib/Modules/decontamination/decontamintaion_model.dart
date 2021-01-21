@@ -19,19 +19,17 @@ class DecontamintaionCodeModel{
 }
 
 List  decontamintaionDetectStyles = [
-  {"title": "机器码UPN","content" :"H&491LAB100C27Z0","style":DecontaminationCellStyle.record,"mark":"upn"},
+  {"title": "机器码UPN","content" :"H&491LAB100C27Z0","style":DecontaminationCellStyle.record,"mark":DecontaminationMenuMark.upnRecord},
   {"title": "Description","content" :"i-Lab CART System Zeron","style":DecontaminationCellStyle.descrpotion},
-  {"title": "机器番号","content" :"10086","hintText":"扫码填入","style":DecontaminationCellStyle.record,"mark":"serial"},
+  {"title": "机器番号","content" :"10086","hintText":"扫码填入","style":DecontaminationCellStyle.record,"mark":DecontaminationMenuMark.serialRecord},
 ];
 
 List decontamintaionUpateStyles = [
   {"title": "UPN","content" :"H7849IAB100C27X0","style":DecontaminationCellStyle.non},
   {"title": "Description","content" :"i-Lab CART System Zerons","style":DecontaminationCellStyle.non},
   {"title": "Serial","content" :"10068","style":DecontaminationCellStyle.non},
-  {"title": "* Unit Yype Code","content" :"","style":DecontaminationCellStyle.menu,"mark":'unitYypeCode'},
-  {"title": "* StatusCode","content" :"","style":DecontaminationCellStyle.menu,"mark":'tatusCode'},
-  {"title": "Reason Code","content" :"","style":DecontaminationCellStyle.menu,"mark":'reasonCode'},
+  {"title": "* Unit Yype Code","content" :"","style":DecontaminationCellStyle.menu,"mark":DecontaminationMenuMark.unitTypeCodeMenu},
+  {"title": "* StatusCode","content" :"","style":DecontaminationCellStyle.menu,"mark":DecontaminationMenuMark.statusCodeMenu},
+  {"title": "Reason Code","content" :"","style":DecontaminationCellStyle.menu,"mark":DecontaminationMenuMark.reasonCodeMenu},
   {"title": "Comment","content" :"","style":DecontaminationCellStyle.comment},
 ];
-
-
