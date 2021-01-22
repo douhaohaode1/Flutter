@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_demo/Http/ServiceImp.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'decontamination_update_page.dart';
@@ -9,94 +11,91 @@ import 'decontamintaion_model.dart';
 import 'decontamintaion_view_model.dart';
 import 'initialize_providers.dart';
 
-
-class DecontaminationPage extends StatefulWidget{
+class DecontaminationPage extends StatefulWidget {
   @override
-  _DecontaminationPageState  createState() => _DecontaminationPageState();
+  _DecontaminationPageState createState() => _DecontaminationPageState();
 }
 
-class _DecontaminationPageState extends State<DecontaminationPage>{
+class _DecontaminationPageState extends State<DecontaminationPage> {
 
   static const Color appThemColor = Color(0xff113a70);
-  static const TextStyle appButtonThemColor = TextStyle(color: Colors.white,fontSize: 19,fontWeight: FontWeight.bold);
+  static const TextStyle appButtonThemColor = TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold);
 
+  static const Color appBarThemTextColor = Color(0xff000A46);
+  static const TextStyle appBarThemTextStyle = TextStyle(color: appBarThemTextColor, fontSize: 19, fontWeight: FontWeight.bold);
 
- // List<SingleChildWidget> providers =
   @override
   Widget build(BuildContext context) {
-    return   Scaffold(
-              appBar: AppBar(
-                  backgroundColor: appThemColor,
-                    title: Text("Boston\nScientific",style: TextStyle(color: Colors.white),textAlign: TextAlign.center),
-                    centerTitle: true,),
-                  body: Consumer<DecontamintaionViewModel>(
-                    builder: (ctx ,vm,child){
-                  return body(vm);
-           },
-        ),
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text("Boston\nScientific",
+            style: appBarThemTextStyle, textAlign: TextAlign.center),
+        centerTitle: true,
+      ),
+      body: body(),
     );
   }
 
-
-  Widget body(vm){
+  Widget body() {
     return Container(
-        color: Colors.white,
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: Consumer<DecontamintaionViewModel>(
-                builder: (ctx, decontamintaionVM, child) {
-                  print("data02 Consumer build方法被执行");
-                  return ListView(
+      color: Colors.white,
+      height: MediaQuery.of(context).size.height,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            child: Consumer<DecontamintaionViewModel>(
+              builder: (ctx, decontamintaionVM, child) {
+                debugPrint("consumer build execute");
+                return GestureDetector(
+                  onPanDown: (DragDownDetails details) {
+                   // decontamintaionVM.hideKeyboard(ctx);
+                  },
+                  child: ListView(
                     children: <Widget>[
-                      DecontaminationItems(model: decontamintaionDetectStyles[0],value:decontamintaionVM.model.upn),
-                      DecontaminationItems(model: decontamintaionDetectStyles[1],value:decontamintaionVM.model.description),
-                      DecontaminationItems(model: decontamintaionDetectStyles[2],value:decontamintaionVM.model.serial),
+                      DecontaminationItems(
+                          model: decontamintaionDetectStyles[0],
+                          value: decontamintaionVM.model.upn),
+                      DecontaminationItems(
+                          model: decontamintaionDetectStyles[1],
+                          value: decontamintaionVM.model.description),
+                      DecontaminationItems(
+                          model: decontamintaionDetectStyles[2],
+                          value: decontamintaionVM.model.serial),
+                      Container(
+                        height: 150,
+                        padding: EdgeInsets.fromLTRB(90, 70, 90, 30),
+                        color: Colors.white,
+                        child: RaisedButton(
+                                color: appThemColor,
+                                child: Text('検索', style: appButtonThemColor),
+                                shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                      color: Colors.white,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(22)),
+                                onPressed: () {
+
+                                  context.read<DecontamintaionViewModel>().clear();
+                                  // if(context.read<DecontamintaionViewModel>().check() == false){
+                                  //   Get.to(DecontaminationUpdatePage());
+                                  // }
+                                  Get.to(DecontaminationUpdatePage());
+                                },
+                              ),
+                      )
                     ],
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
-            ///下面控件位于Column布局底部
-            Container(
-              color: Colors.white,
-              padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end, //平均分配
-                children: <Widget>[
-                  SizedBox(
-                    width: (MediaQuery.of(context).size.width - 30)/2,
-                    height: 44,
-                    child:  RaisedButton(
-                      color: appThemColor,
-                      child: Text('检测',style: appButtonThemColor),
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            color: Colors.white,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8)),
-                      onPressed: () {
-                        context.read<DecontamintaionViewModel>().clear();
-                        // if(context.read<DecontamintaionViewModel>().check() == false){
-                        //   Get.to(DecontaminationUpdatePage());
-                        // }
-                        Get.to(DecontaminationUpdatePage());
+          ),
 
-
-
-                      },
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-      //bodyListView(context),
+        ],
+      ),
     );
   }
 }
-

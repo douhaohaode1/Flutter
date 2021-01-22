@@ -67,6 +67,8 @@ class _QRSeannerViewState extends State<QRSeannerView> {
         if (widget.mark == DecontaminationMenuMark.serialRecord) {
           context.read<DecontamintaionViewModel>().changeModel(context,serial: scanData.code);
         }
+        context.read<DecontamintaionViewModel>().hideboard(context);
+
         controller.pauseCamera();
         Navigator.pop(context);
         controller.dispose();

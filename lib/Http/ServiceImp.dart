@@ -75,6 +75,21 @@ class ServiceImpl{
 
     var parame = {'baseInfo':{'userId':"123456",'tenantId':"654321"}};
     //http://10.10.35.201:51002/api/cop/test/getDecontaminationState
+    /*
+    * {code: 1, data: {status: 200, msg: success, decontaminationEnum: {unitTypeMasterList: [{unitTypeCode: 01, description: SalesProgram},
+    * {unitTypeCode: 02, description: Rental}, {unitTypeCode: 03, description: Loaner}, {unitTypeCode: 04, description: Sold}],
+    *  statusMasterList: [{statusCode: 00, description: なし, durationTime: 00:00:00}, {statusCode: 01, description: 受領, durationTime: 00:10:00},
+    * {statusCode: 02, description: RGA申請, durationTime: 00:10:00}, {statusCode: 03, description: 除染, durationTime: 02:00:00},
+    * {statusCode: 04, description: JP30へ移動, durationTime: 00:10:00}, {statusCode: 05, description: タグ付け, durationTime: 02:00:00},
+    * {statusCode: 06, description: 動作点検, durationTime: 02:00:00}, {statusCode: 07, description: リワーク, durationTime: 01:00:00},
+    * {statusCode: 08, description: D625移動待ち, durationTime: 00:30:00}, {statusCode: 09, description: 完了, durationTime: 00:00:00}],
+    *  reasonMasterList: [{reasonCode: 01, r<…>
+
+    * {"code":"1","data":{"status":400,"msg":"no data found","equipmentMaster":null}}
+    flutter: {"code":"1","data":{"status":400,"msg":"no data found","equipmentMaster":null}}
+    *
+    * */
+
 
     Response responses = await HttpUtils.getInstance().post('/api/cop/test/getDecontaminationEnum',data: parame
         ,onSuccess: (responses){
