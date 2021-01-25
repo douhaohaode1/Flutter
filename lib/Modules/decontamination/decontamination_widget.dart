@@ -6,7 +6,7 @@ import 'package:flutter_demo/Modules/decontamination/decontamintaion_model.dart'
 import 'package:flutter_demo/Modules/decontamination/qr_code_scanner_page.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-
+import 'decontamination_public.dart';
 import 'decontamintaion_view_model.dart';
 
 enum DecontaminationCellStyle {
@@ -34,21 +34,6 @@ class DecontaminationItems <T> extends StatefulWidget{
 }
 
 class _DecontaminationItemsState extends State<DecontaminationItems> {
-
-  static const Color appThemColor = Color(0xff113a70);
-  static const Color TextThemColor = Color(0xff3d3d3d);
-  static const Color contentTextColor = Color(0xff004A7A);
-  static const Color appThemBackgroupColor = Color(0xffE4EFF7);
-  static const Color ThemhintTextColor = Color(0xff125683);
-  static const Color appThemTitleTextColor = Color(0xff060606);
-  static const TextStyle appTitleColorTextStyle = TextStyle(color: appThemTitleTextColor,fontSize: 17 ,);
-  static const TextStyle appThemColorTextStyle = TextStyle(color: appThemColor,fontSize: 17 ,);
-  static const TextStyle appContnetTextStyle = TextStyle(color: contentTextColor,fontSize: 17 ,);
-
-  static const TextStyle appMakeColorStyle = TextStyle(color: Colors.red,fontSize: 21 ,);
-  static const TextStyle appBlackColorTextStyle = TextStyle(color: Colors.black,fontSize: 17 ,);
-
-
   @override
   Widget build(BuildContext context) {
     switch(widget.model["style"]){
@@ -56,8 +41,7 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
         return buildNonItem(context);
         break;
       case DecontaminationCellStyle.record:
-        //return buildRecordItem(context);
-        return buildRecordItem1(context);
+        return buildRecordItem(context);
         break;
       case DecontaminationCellStyle.descrpotion:
         return buildDescrpotionItem(context);
@@ -75,151 +59,82 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
 
   Widget buildNonItem(BuildContext context){
     return Container(
-      padding: EdgeInsets.fromLTRB(50, 30, 50, 20),
+
+      padding: EdgeInsets.fromLTRB(56, 25, 56, widget.model["title"] == "Serial:" ? 20 : 0),
           child: Row(
             children: [
               Container(
                 width: 100,
-                child: Text(widget.model["title"],style: appThemColorTextStyle,textAlign:TextAlign.left),
+                child: Text(widget.model["title"],style: AppTextStyle.appThemColorTextStyle,textAlign:TextAlign.left),
               ),
+              SizedBox(width: 10),
               Expanded(
-                  child:Text(widget.value,style: appContnetTextStyle,textAlign:TextAlign.left,maxLines: 20,),
+                  child:Text(widget.value,style: AppTextStyle.appThemColorTextStyle,textAlign:TextAlign.left,maxLines: 20,),
               ),
             ],
         ),
     );
   }
 
-
-  Widget buildRecordItem1(BuildContext context){
-
+  Widget buildRecordItem(BuildContext context){
     return Container(
-      padding: EdgeInsets.fromLTRB(30, widget.model['mark'] == DecontaminationMenuMark.upnRecord ? 40 : 10, 30, 20),
+      height: 90,
+      padding: EdgeInsets.fromLTRB(42, 30 , 35, 20),
       child: Row(
           children: <Widget>[
                 Expanded(
                   child:  TextField(
-                    //controller: buildTextController(widget.model['mark'],decontamintaionVM),
+                    readOnly: true,
+                    controller: TextEditingController(text: widget.value ?? ""),
                     inputFormatters: [LengthLimitingTextInputFormatter(25)],
                     decoration: InputDecoration(
                       fillColor: appThemBackgroupColor,
                       filled: true,
                       hintText:  widget.model['title'],
-                      hintStyle:TextStyle(color: ThemhintTextColor,fontSize: 17 ),
+                      hintStyle:TextStyle(color: hintTextColor,fontSize: 14 ),
                       contentPadding: EdgeInsets.symmetric(vertical: 5.0,horizontal:6.0),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(7),
                           borderSide: BorderSide.none),
-                      // enabledBorder: OutlineInputBorder(
-                      //     //borderSide: BorderSide(color: appThemColor, width: 1)
-                      // ),
-                      // focusedBorder: OutlineInputBorder(
-                      //     //borderSide: BorderSide(color: appThemColor, width: 1)
-                      // ),
-
                     ),
                   ),
                 ),
-
-            SizedBox(width: 10),
-
+            SizedBox(width: 8),
             IconButton(
               icon:Image.asset(
                   "images/scancode.png",
-                  width: 40,
-                  height: 40,),
+                  width: 27,
+                  height: 27,),
               padding: EdgeInsets.all(2),
               onPressed: () {
-                //decontamintaionVM.hideboard(ctx);
                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => QRSeannerView(widget.model["mark"])));
               },
             ),
-
           ],
-
       ),
     );
   }
 
-
-  Widget buildRecordItem(BuildContext context){
-    String input = '';
-    TextEditingController buildTextController(DecontaminationMenuMark mark ,DecontamintaionViewModel VM){
-      final controller = TextEditingController();
-      controller.addListener(() {
-        input =  controller.text;
-        // if(mark == DecontaminationMenuMark.upnRecord){
-        //   VM.changeUpn(context, controller.text);
-        // }
-        // if(mark == DecontaminationMenuMark.serialRecord){
-        //   VM.changeSerial(context ,controller.text);
-        // }
-        print('input ${controller.text}');
-      });
-      return controller;
-    }
-
-    return  Container(
-          padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
-           child: Column(
-             crossAxisAlignment: CrossAxisAlignment.start,
-             children: <Widget>[
-              Text(widget.model["title"],style: appTitleColorTextStyle,textAlign:TextAlign.left),
-              SizedBox(height: 10),
-                  Container(
-                    height: 44,
-                     child:
-                     Consumer<DecontamintaionViewModel>(
-                       builder: (ctx, decontamintaionVM, child) {
-                         return
-                           TextField(
-                           controller: buildTextController(widget.model['mark'],decontamintaionVM),
-                           inputFormatters: [LengthLimitingTextInputFormatter(25)],
-                           decoration: InputDecoration(
-                             contentPadding: EdgeInsets.symmetric(vertical: 4.0,horizontal:8.0),
-                             enabledBorder: OutlineInputBorder(
-                                 borderSide: BorderSide(color: appThemColor, width: 1)
-                             ),
-                             focusedBorder: OutlineInputBorder(
-                                 borderSide: BorderSide(color: appThemColor, width: 1)
-                             ),
-                             suffixIcon: IconButton(
-                               icon: Icon(Icons.camera_alt_outlined ,
-                                 color: appThemColor,size: 44,),
-                               padding: EdgeInsets.all(2),
-                               onPressed: () {
-
-                                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => QRSeannerView(widget.model["mark"])));
-                               },
-                             ),
-                           ),
-                         );
-                       },
-                     ),
-                ),
-              ],
-            ),
-      );
-  }
-
   Widget buildDescrpotionItem(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(30, 0, 30, 20),
+      padding: EdgeInsets.fromLTRB(42, 0, 42, 0),
       child:  Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(widget.model["title"],style: appTitleColorTextStyle,textAlign:TextAlign.left),
+          Container(
+            height: 20,
+            child:  Text(widget.model["title"],style: AppTextStyle.appTitleColorTextStyle,textAlign:TextAlign.left),
+          ),
           SizedBox(height: 10),
           Container(
-            height: 130,
+            height: 140,
             alignment : Alignment.topLeft,
-            //margin: const EdgeInsets.all(15.0),
             padding: const EdgeInsets.all(3.0),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(7),
-                border: Border.all(color: appThemColor, width: 1.5)
+                border: Border.all(color: AppColors.mainColor, width: 1.5)
             ),
-            child: Text("   ${widget.value}",style: appTitleColorTextStyle,textAlign:TextAlign.left),
+            child: Text("   ${widget.value}",style: AppTextStyle.appTitleColorTextStyle,textAlign:TextAlign.left),
           ),
         ],
       ),
@@ -227,26 +142,23 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
   }
 
   List<DropdownMenuItem> buildMenuItems(DecontaminationMenuMark mark ,DecontamintaionViewModel VM){
-    List menu;
+    List<DecontamintaionCode> menu;
     if (mark ==  DecontaminationMenuMark.unitTypeCodeMenu){
-      // List _unitTypeCodeEnum;
-      // List _statusCodeEnum;
-      // List _reasonCodeEnum;
-      menu = [{"name":"1231","id":'1'},{"name":"23232","id":'2'},{"name":"44533","id":'3'}];
+      menu = VM.model.menu.unitTypeMasterList;
     }
     if (mark ==   DecontaminationMenuMark.statusCodeMenu)   {
-      menu =  [{"name":"fsfsdfs","id":'4'},{"name":"adasdasdas","id":'5'},{"name":"ccasdad","id":'6'}];
+      menu =  VM.model.menu.statusMasterList;
     }
     if (mark ==   DecontaminationMenuMark.reasonCodeMenu)  {
-      menu =  [{"name":"aaaaaa","id":'7'},{"name":"bbbbbb","id":'8'},{"name":"ccccccc","id":'9'}];
+       menu = VM.model.menu.reasonMasterList;
     }
     var datas =  menu.asMap().keys.map((item)=>
         DropdownMenuItem(
           child: Container(
             padding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
-            child:Text( menu[item]['name'] ,style: appContnetTextStyle),
+            child:Text( menu[item].description ,style: AppTextStyle.appThemColorTextStyle),
           ),
-          value: menu[item]["id"],
+          value: menu[item].codeId,
         ),
     ).toList();
     return  datas;
@@ -255,22 +167,21 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
   String menuSelectValue;
 
   Widget buildMenuItem(BuildContext context) {
-
     return  Container(
-      padding: EdgeInsets.fromLTRB(30, 8, 30, 8),
+      padding: EdgeInsets.fromLTRB(25, 2, 25, 2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: <Widget>[
-              Text(widget.model["mark"] == DecontaminationMenuMark.reasonCodeMenu ? " " : "*",style: appMakeColorStyle,textAlign:TextAlign.left),
+              Text(widget.model["mark"] == DecontaminationMenuMark.reasonCodeMenu ? " " : "*",style: AppTextStyle.appMakeColorStyle,textAlign:TextAlign.left),
               SizedBox(width: 2),
-              Text(widget.model["title"],style: appThemColorTextStyle,textAlign:TextAlign.left),
+              Text(widget.model["title"],style: AppTextStyle.appThemColorTextStyle,textAlign:TextAlign.left),
             ],
           ),
         SizedBox(height: 5),
         Container(
-            height: 44,
+            height: 37.5,
             decoration: BoxDecoration(
               color: appThemBackgroupColor,
             borderRadius: BorderRadius.vertical(
@@ -284,8 +195,8 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
                 value: menuSelectValue,
                 underline: Container(height: 1),
                 isExpanded: true,
-                icon: Icon(Icons.keyboard_arrow_down_outlined,color: appThemColor,),
-                iconSize: 40,
+                icon: Icon(Icons.keyboard_arrow_down,color: AppColors.mainColor,),
+                iconSize: 30,
                 onChanged: (value){
                   _onMenuChanged(context,value,decontamintaionVM);
                 },
@@ -314,37 +225,29 @@ class _DecontaminationItemsState extends State<DecontaminationItems> {
   }
 
   Widget buildCommentTextFiled(BuildContext context){
-    DecontamintaionModle modle = Provider.of<DecontamintaionViewModel>(context).model;
-    TextEditingController controller = TextEditingController();
-    controller.text =  modle.comment;
-    controller.addListener(() {
-       debugPrint('${controller.text}');
-       context.read<DecontamintaionViewModel>().changeComment(context,controller.text);
-    });
     return  Container(
       padding: EdgeInsets.fromLTRB(30, 5, 30, 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(widget.model["title"],style: appBlackColorTextStyle,textAlign:TextAlign.left),
+          Text(widget.model["title"],style: AppTextStyle.appBlackColorTextStyle,textAlign:TextAlign.left),
           SizedBox(height: 5),
-          Container(
-            alignment: Alignment.center,
-            child:   Consumer<DecontamintaionViewModel>(
+          Consumer<DecontamintaionViewModel>(
               builder: (ctx, decontamintaionVM, child) {
                 return  TextField(
-                  maxLines: 6,
-                  controller: controller,
-                 // focusNode: decontamintaionVM.commentFocusNode,
+                  maxLines: 4,
+                  onChanged: (text) {
+                    print('change $text');
+                    decontamintaionVM.changeModel(ctx,comment:text);
+                  },
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: appThemColor, width: 1.5)),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: appThemColor, width: 1.5)),
+                        borderSide: BorderSide(color: AppColors.mainColor, width: 1.5)),
+                  focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: AppColors.mainColor, width: 1.5)),
                   ),
-                );
-              },
-            ),
+               );
+             },
           ),
         ],
       ),

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_demo/Http/ServiceImp.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'decontamination_public.dart';
 import 'decontamination_update_page.dart';
 import 'decontamination_widget.dart';
 import 'package:get/get.dart';
@@ -17,22 +18,32 @@ class DecontaminationPage extends StatefulWidget {
 }
 
 class _DecontaminationPageState extends State<DecontaminationPage> {
-
-  static const Color appThemColor = Color(0xff113a70);
-  static const TextStyle appButtonThemColor = TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold);
-
-  static const Color appBarThemTextColor = Color(0xff000A46);
-  static const TextStyle appBarThemTextStyle = TextStyle(color: appBarThemTextColor, fontSize: 19, fontWeight: FontWeight.bold);
-
   @override
   Widget build(BuildContext context) {
+    Loading.hideLoading(context);
 
+     //var json=  ServiceImpl.getInstance().getDecontaminationEnum();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Boston\nScientific",
-            style: appBarThemTextStyle, textAlign: TextAlign.center),
+        title:Image.asset(
+                "images/bsj_logo.png",
+                color: AppColors.mainColor,
+                fit: BoxFit.cover,
+                width:CommonUtils.getScreenSize(context).width / 3,
+            ),
         centerTitle: true,
+        leading: IconButton(
+          padding: EdgeInsets.only(left: 5, right: 15 ,top: 0,bottom: 10),
+          icon: Icon(
+            Icons.menu_outlined,
+            color: AppColors.black3,
+          ),
+          onPressed: (){
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: body(),
     );
@@ -49,51 +60,52 @@ class _DecontaminationPageState extends State<DecontaminationPage> {
             child: Consumer<DecontamintaionViewModel>(
               builder: (ctx, decontamintaionVM, child) {
                 debugPrint("consumer build execute");
-                return GestureDetector(
-                  onPanDown: (DragDownDetails details) {
-                   // decontamintaionVM.hideKeyboard(ctx);
-                  },
-                  child: ListView(
-                    children: <Widget>[
-                      DecontaminationItems(
-                          model: decontamintaionDetectStyles[0],
-                          value: decontamintaionVM.model.upn),
-                      DecontaminationItems(
-                          model: decontamintaionDetectStyles[1],
-                          value: decontamintaionVM.model.description),
-                      DecontaminationItems(
-                          model: decontamintaionDetectStyles[2],
-                          value: decontamintaionVM.model.serial),
-                      Container(
-                        height: 150,
-                        padding: EdgeInsets.fromLTRB(90, 70, 90, 30),
-                        color: Colors.white,
-                        child: RaisedButton(
-                                color: appThemColor,
-                                child: Text('検索', style: appButtonThemColor),
-                                shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                      color: Colors.white,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(22)),
-                                onPressed: () {
+                return ListView(
+                  children: <Widget>[
+                    DecontaminationItems(
+                        model: decontamintaionDetectStyles[0],
+                        value: decontamintaionVM.model.upn),
+                    DecontaminationItems(
+                        model: decontamintaionDetectStyles[1],
+                        value: decontamintaionVM.model.description),
+                    DecontaminationItems(
+                        model: decontamintaionDetectStyles[2],
+                        value: decontamintaionVM.model.serial),
+                    Container(
+                      height: 200,
+                      padding: EdgeInsets.fromLTRB(120, 80, 120, 80),
+                      color: Colors.white,
+                      child: RaisedButton(
+                        color: AppColors.mainColor,
+                        child: Text('検索', style: AppTextStyle.appButtonThemColor),
+                        shape: RoundedRectangleBorder(
+                            //side: BorderSide(
+                             // color: Colors.white,
+                              //width: 1,
+                            //),
+                            borderRadius: BorderRadius.circular(22)),
+                        onPressed: () {
 
-                                  context.read<DecontamintaionViewModel>().clear();
-                                  // if(context.read<DecontamintaionViewModel>().check() == false){
-                                  //   Get.to(DecontaminationUpdatePage());
-                                  // }
-                                  Get.to(DecontaminationUpdatePage());
-                                },
-                              ),
-                      )
-                    ],
-                  ),
+                          var future = context.read<DecontamintaionViewModel>().check(context);
+                          future.then((bool value) {
+                            debugPrint("true--------${value}");
+                            if (value == true) {
+                              Navigator.push(context, MaterialPageRoute( builder: (BuildContext context) =>
+                                         DecontaminationUpdatePage())); }
+                          }).catchError((error) {
+                             debugPrint(error);
+                          }).whenComplete(() {
+                             debugPrint("Execution complete");
+                            //Loading.hideLoading(context);
+                          });
+                        },
+                      ),
+                    )
+                  ],
                 );
               },
             ),
           ),
-
         ],
       ),
     );

@@ -8,8 +8,8 @@ import 'package:get/get.dart';
 import 'decontamintaion_view_model.dart';
 
 class QRSeannerView extends StatefulWidget {
-
-  const QRSeannerView(this.mark,{
+  const QRSeannerView(
+    this.mark, {
     Key key,
   }) : super(key: key);
   final DecontaminationMenuMark mark;
@@ -18,7 +18,6 @@ class QRSeannerView extends StatefulWidget {
 }
 
 class _QRSeannerViewState extends State<QRSeannerView> {
-
   QRViewController controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   @override
@@ -30,97 +29,113 @@ class _QRSeannerViewState extends State<QRSeannerView> {
       controller.resumeCamera();
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children:<Widget>[
-           Container(
-              child:  Consumer<DecontamintaionViewModel>(
-                    builder: (ctx, decontamintaionVM, child) {
-                    return  _buildQrView(context);
-              },),
-           ),
-           _buildFlutterWidget(context),
+        children: <Widget>[
+          Container(
+            child: _buildQrView(context),
+          ),
+          _buildFlutterWidget(context),
         ],
       ),
     );
   }
 
   Widget _buildQrView(BuildContext context) {
-    return  QRView(
+    return QRView(
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
     );
   }
+
+  String isValue; // Prevent continuous scanning
+
   void _onQRViewCreated(QRViewController controller) {
     setState(() {
       this.controller = controller;
     });
-    controller.scannedDataStream.listen((scanData)  {
-      print(scanData.code);
-      if (null !=scanData.code ) {
-        if (widget.mark ==  DecontaminationMenuMark.upnRecord){
-          context.read<DecontamintaionViewModel>().getDescroption(context,unp:scanData.code);
-          context.read<DecontamintaionViewModel>().changeModel(context,upn: scanData.code);
+    controller.scannedDataStream.listen((scanData) {
+      if (null != scanData.code  && isValue == null) {
+        controller.pauseCamera();
+        isValue = scanData.code;
+        if (widget.mark == DecontaminationMenuMark.upnRecord) {
+          var future = context.read<DecontamintaionViewModel>().getDescroption(context, unp: scanData.code);
+          future.then((bool value) {
+            if (value == true) {
+              Navigator.pop(context);
+              controller.dispose();
+            }
+          }).catchError((error) {
+            print(error);
+            controller.resumeCamera();
+            isValue = null;
+          }).whenComplete(() {
+            debugPrint("Execution complete");
+          });
         }
         if (widget.mark == DecontaminationMenuMark.serialRecord) {
-          context.read<DecontamintaionViewModel>().changeModel(context,serial: scanData.code);
+          context.read<DecontamintaionViewModel>().changeModel(context, serial: scanData.code);
+          Navigator.pop(context);
+          controller.dispose();
         }
-        context.read<DecontamintaionViewModel>().hideboard(context);
-
-        controller.pauseCamera();
-        Navigator.pop(context);
-        controller.dispose();
+        controller.resumeCamera();
       }
     });
   }
 
-  Widget _buildFlutterWidget(BuildContext context){
+  Widget _buildFlutterWidget(BuildContext context) {
     return Container(
-        width:double.infinity,
-        decoration: new BoxDecoration(
+      width: double.infinity,
+      decoration: new BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.all(Radius.circular(4.0)),
-        border:Border.all(width: 1, color: Color(0xFFAAAAAA)),
-        ),
-        child: (
-          Column(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 2 - 40,
-                  child:  Container(
-                    alignment: Alignment.topLeft,
-                    padding: EdgeInsets.only(left: 20, top:  80),
-                      child : IconButton(
-                        alignment: Alignment.topLeft,
-                        icon: Icon(Icons.arrow_back_outlined,color: Colors.white,),
-                        onPressed: (){
-                        Navigator.pop(context);
-                      }
-                  ),
-                ),
-              ),
-              Container(
-                  width: MediaQuery.of(context).size.width - 40,
-                  height: 80,
-                  alignment: Alignment.center,
-                  decoration: new BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                    border:Border.all(width: 2.5, color: Color(0xFFAAAAAA)),
-                  ),
-                  child:  Container(
-                       alignment: Alignment.center,
-                      child:Text('扫码区域',style: TextStyle(color: Colors.white,fontSize: 19,fontWeight: FontWeight.bold)),
-                  ),
-              ),
-          ],
-        )
+        border: Border.all(width: 1, color: Color(0xFFAAAAAA)),
       ),
+      child: (Column(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 2 - 40,
+            child: Container(
+              alignment: Alignment.topLeft,
+              padding: EdgeInsets.only(left: 20, top: 80),
+              child: IconButton(
+                  alignment: Alignment.topLeft,
+                  icon: Icon(
+                    Icons.arrow_back_outlined,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width - 40,
+            height: 80,
+            alignment: Alignment.center,
+            decoration: new BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.all(Radius.circular(4.0)),
+              border: Border.all(width: 2.5, color: Color(0xFFAAAAAA)),
+            ),
+            child: Container(
+              alignment: Alignment.center,
+              child: Text('Scan code',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold)),
+            ),
+          ),
+        ],
+      )),
     );
   }
+
   @override
   void dispose() {
     controller.dispose();

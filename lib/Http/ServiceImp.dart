@@ -89,8 +89,6 @@ class ServiceImpl{
     flutter: {"code":"1","data":{"status":400,"msg":"no data found","equipmentMaster":null}}
     *
     * */
-
-
     Response responses = await HttpUtils.getInstance().post('/api/cop/test/getDecontaminationEnum',data: parame
         ,onSuccess: (responses){
           print(responses);

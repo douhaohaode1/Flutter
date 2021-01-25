@@ -1,35 +1,44 @@
 
-import 'decontamination_widget.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'decontamintaion_model.g.dart';
 
-class DecontamintaionModle{
-   String upn;
-   String description;
-   String serial;
-   String unitTypeCode;
-   String statusCode;
-   String reasonCode;
-   String comment;
-  DecontamintaionModle({this.upn,this.description,this.serial,this.reasonCode,this.unitTypeCode,this.statusCode,this.comment});
-}
 
+@JsonSerializable()
 class DecontamintaionCodeModel{
-  DecontamintaionCodeModel(this.id,this.name);
-   int id;
-   String name;
+
+  @JsonKey(name: "unitTypeMasterList")
+  final  List <DecontamintaionCode>  unitTypeMasterList;
+
+  @JsonKey(name: "statusMasterList")
+  final  List <DecontamintaionCode> statusMasterList;
+
+  @JsonKey(name: "reasonMasterList")
+  final  List <DecontamintaionCode> reasonMasterList;
+
+  DecontamintaionCodeModel(
+      this.unitTypeMasterList,
+      this.statusMasterList,
+      this.reasonMasterList,
+      );
+
+  factory DecontamintaionCodeModel.fromJson(Map<String, dynamic> json) =>
+      _$DecontamintaionCodeModelFromJson(json);
 }
 
-List  decontamintaionDetectStyles = [
-  {"title": "机器UPN","content" :"H&491LAB100C27Z0","style":DecontaminationCellStyle.record,"mark":DecontaminationMenuMark.upnRecord},
-  {"title": "Description","content" :"i-Lab CART System Zeron","style":DecontaminationCellStyle.descrpotion},
-  {"title": "シリアル番号","content" :"10086","hintText":"扫码填入","style":DecontaminationCellStyle.record,"mark":DecontaminationMenuMark.serialRecord},
-];
+@JsonSerializable()
+class DecontamintaionCode{
+  final  String description;
+  final  String statusCode;
+  final  String durationTime;
+  final  String codeId;
 
-List decontamintaionUpateStyles = [
-  {"title": "UPN:","content" :"H7849IAB100C27X0","style":DecontaminationCellStyle.non},
-  {"title": "Description:","content" :"i-Lab CART System Zerons","style":DecontaminationCellStyle.non},
-  {"title": "Serial:","content" :"10068","style":DecontaminationCellStyle.non},
-  {"title": "Unit Type Code","content" :"","style":DecontaminationCellStyle.menu,"mark":DecontaminationMenuMark.unitTypeCodeMenu},
-  {"title": "Status Code","content" :"","style":DecontaminationCellStyle.menu,"mark":DecontaminationMenuMark.statusCodeMenu},
-  {"title": "Reason Code","content" :"","style":DecontaminationCellStyle.menu,"mark":DecontaminationMenuMark.reasonCodeMenu},
-  {"title": "Comment","content" :"","style":DecontaminationCellStyle.comment},
-];
+  DecontamintaionCode(
+      this.description,
+      this.statusCode,
+      this.durationTime,
+      this.codeId,
+      );
+
+  factory DecontamintaionCode.fromJson(Map<String, dynamic> json) =>
+      _$DecontamintaionCodeFromJson(json);
+}
