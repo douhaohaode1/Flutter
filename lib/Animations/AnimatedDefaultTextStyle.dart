@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-///test
-///
-///
-/// 
+
 class AnimatedDefaultTextStyleExample extends StatefulWidget {
   static const routeName = '/animated-default-textstyle';
 
