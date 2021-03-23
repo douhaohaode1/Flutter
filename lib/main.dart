@@ -17,6 +17,7 @@ void main() {
   print(ui.window.locale.languageCode);
   print(ui.window.locale.countryCode);
 
+  ///  test2222222222
   // // 强制竖屏
   // SystemChrome.setPreferredOrientations([
   //   DeviceOrientation.portraitUp,
